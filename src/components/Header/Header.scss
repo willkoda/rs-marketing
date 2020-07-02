@@ -38,5 +38,10 @@ header.Header {
                 }
             }
         }
+
+        div.mobile--menu {
+            display: flex;
+            align-items: center;
+        }
     }
 }

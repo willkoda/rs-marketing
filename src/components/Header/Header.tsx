@@ -1,8 +1,26 @@
 import React from 'react';
 import './Header.scss';
-import {NavLink} from 'react-router-dom';
+import {NavLink, Link} from 'react-router-dom';
+
+import Menu from '../../elements/Menu/Menu';
 
 function Header() {
+
+    const menuOptions = [
+        <Link key="0" to="/">
+            <div className="link--content">
+                {/* <LockOpenIcon />  */}
+                <span>Sign In</span>
+            </div>
+        </Link>,
+        <Link key="1" to="/">
+            <div className="link--content">
+                {/* <AirplayIcon />  */}
+                <span>Register</span>
+            </div>
+        </Link>
+    ];
+
     return (
         <header className="Header">
             <div className="constrained--container container">
@@ -10,7 +28,7 @@ function Header() {
                     <div className="name">ADMIN DESK</div>
                     <div className="description">With ease, with US.</div>
                 </div>
-                <ul className="navigation--links">
+                {/* <ul className="navigation--links">
                     <li>
                         <NavLink to="/">Home</NavLink>
                     </li>
@@ -20,7 +38,10 @@ function Header() {
                     <li>
                         <NavLink to="/">Contact US</NavLink>
                     </li>
-                </ul>
+                </ul> */}
+                <div className="mobile--menu">
+                    <Menu buttonBackgroundColor="rgb(0, 0, 0)" menuOptions={menuOptions} />
+                </div>
             </div>
         </header>
     )
