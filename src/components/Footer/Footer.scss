@@ -1,0 +1,15 @@
+footer.Footer {
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    
+    div.container {
+        height: inherit;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @media (max-width: 600) {
+            font-size: 15px;
+        }
+    }
+}

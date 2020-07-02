@@ -26,6 +26,9 @@ header.Header {
         ul.navigation--links {
             display: flex;
             align-items: center;
+            @media (max-width: 600px) {
+                display: none;
+            }
             li {
                 &:not(:last-of-type) {
                     margin-right: 20px;
@@ -35,6 +38,10 @@ header.Header {
                     font-weight: 600;
                     text-transform: uppercase;
                     font-size: 13px;
+                    transition: color 140ms ease-in-out;
+                    &:hover {
+                        color: var(--base);
+                    }
                 }
             }
         }
@@ -42,6 +49,10 @@ header.Header {
         div.mobile--menu {
             display: flex;
             align-items: center;
+            display: none;
+            @media (max-width: 600px) {
+                display: flex;
+            }
         }
     }
 }

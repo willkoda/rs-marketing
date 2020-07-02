@@ -40,7 +40,7 @@ function Menu({menuOptions, buttonBackgroundColor}: Props) {
 
     return (
         <div className="Menu">
-            <button className="menu--button padding-right-10 ripple" onClick={() => setMenuActive(!menuActive)}>
+            <button className="menu--button ripple" onClick={() => setMenuActive(!menuActive)}>
                 <span className="bar top--bar" style={{backgroundColor: buttonBackgroundColor}}></span>
                 <span className="bar middle--bar" style={{backgroundColor: buttonBackgroundColor}}></span>
                 <span className="bar bottom--bar" style={{backgroundColor: buttonBackgroundColor}}></span>
