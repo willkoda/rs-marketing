@@ -1,0 +1,52 @@
+div.Input {
+    width: 100%;
+    label {
+        width: 100%;
+        display: block;
+        position: relative;
+
+        &:focus-within {
+            span.input--border {
+                transform: scaleX(1);
+            }
+        }
+
+        input {
+            width: 100%;
+            outline: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 300;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+        }
+
+        span.label--placeholder {
+            position: absolute;
+            font-weight: 300;
+            font-style: 18px;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+            transition: transform 250ms ease-in-out, color 300ms ease-in-out;
+            transform-origin: left;
+            color:  var(--light-grey);
+            user-select: none;
+        }
+        
+        span.input--border {
+            height: 2px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            transform: scaleX(0);
+            transition: transform 260ms ease-in-out;
+        }
+    }
+    div.input--error {
+        text-align: left;
+        color: var(--dark-red);
+        font-size: 12px;
+        min-height: 18px;
+    }
+}

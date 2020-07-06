@@ -33,7 +33,10 @@ header.Header {
                 &:not(:last-of-type) {
                     margin-right: 20px;
                 }
-                a {
+                a, button {
+                    border: none;
+                    outline: none;
+                    background-color: transparent;
                     color: var(--dark-text);
                     font-weight: 600;
                     text-transform: uppercase;

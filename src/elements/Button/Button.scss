@@ -1,0 +1,37 @@
+button.Button {
+    outline: none;
+    font-size: 14px;
+    border: none;
+    box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+    transition: background-color 700ms ease-in-out;
+    &.accent--two {
+        background-color: var(--accent-two-shade-two);
+    }
+    &.accent--three {
+        background-color: var(--accent-three-shade-one);
+    }
+    &.status--approved {
+        background-color: var(--status--approved--color);
+    }
+    &.status--requested {
+        background-color: var(--status--requested--color);
+    }
+    &.status--success {
+        background-color: var(--status--success--color);
+    }
+    &.dark--red {
+        background-color: var(--dark-red);
+    }
+    &.loading {
+        background-color: rgba(0, 0, 0, 0.2);
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+
+    &[data-button-type=text] {
+        width: auto;
+        background-color: transparent;
+        box-shadow: none;
+        transition: background-color 300ms ease-in-out;
+    }
+}

@@ -58,12 +58,12 @@ div.Menu {
                 }
             }
     
-            &:first-of-type a {
+            &:first-of-type a, &:first-of-type button {
                 padding-top: 15px;
             }
 
-            &:last-of-type a {
-                padding-bottom: 15px;
+            &:last-of-type a, &:last-of-type button {
+                padding-bottom: 20px;
             }
     
             a {
@@ -80,8 +80,15 @@ div.Menu {
             }
     
             button {
-                padding-bottom: 20px;
+                text-align: left;
+                font-size: 14px;
+                padding: 10px;
+                padding-left: 30px;
+                padding-right: 30px;
                 width: 100%;
+                background-color: transparent;
+                outline: none;
+                border: none;
                 &:hover div.button--content {
                     background-color: rgba(0, 0, 0, 0.04);
                 }
