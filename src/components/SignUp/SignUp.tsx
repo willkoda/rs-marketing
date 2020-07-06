@@ -5,6 +5,7 @@ import Select from '../../elements/Select/Select';
 import Button from '../../elements/Button/Button';
 
 function SignUp() {
+
     const initialState = {value: '', valid: true, error: ''};
     const [firstName, setFirstName] = useState({...initialState});
     const [lastName, setLastName] = useState({...initialState});
@@ -126,7 +127,7 @@ function SignUp() {
                             placeholder="Email" 
                             value={email.value} 
                             changeCallback={changeHandler}
-                            validatedProps={{minLength: 3, english: true}}
+                            validatedProps={{email: true}}
                             valid={email.valid} 
                             error={email.error}
                             timeStamp={timeStamp}

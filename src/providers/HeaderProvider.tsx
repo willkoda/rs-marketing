@@ -7,20 +7,22 @@ interface Props {
 interface Context {
     activeMainPageSection: ActiveLink;
     updateActiveMainPageSection(newActiveLink: ActiveLink): void;
+    clickTimeStamp: number;
 }
 
-type ActiveLink = 'home' | 'services' | 'contact-us';
-
 function HeaderProvider(props: Props) {
-    const [activeMainPageSection, setActiveMainPageSection] = useState<ActiveLink>('home');
+    const [activeMainPageSection, setActiveMainPageSection] = useState<ActiveLink>(null!);
+    const [clickTimeStamp, setClickTimeStamp] = useState(0);
 
     const updateActiveMainPageSection = (newActiveLink: ActiveLink) => {
         setActiveMainPageSection(newActiveLink);
-    }
+        setClickTimeStamp(Date.now())
+;    }
 
     const state = {
         activeMainPageSection: activeMainPageSection,
-        updateActiveMainPageSection: updateActiveMainPageSection
+        updateActiveMainPageSection: updateActiveMainPageSection,
+        clickTimeStamp: clickTimeStamp
     }
 
     return (
@@ -31,4 +33,5 @@ function HeaderProvider(props: Props) {
 }
 
 export const HeaderContext = React.createContext<Context>(null!);
+export type ActiveLink = 'home' | 'services' | 'contact-us';
 export default HeaderProvider;

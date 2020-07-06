@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useEffect, useContext, useRef} from 'react';
 import './Main.scss';
 import './Services.scss';
 import {Link} from 'react-router-dom';
+
+import {HeaderContext} from '../../providers/HeaderProvider'
 
 import {
     Airplay as AirplayIcon,
@@ -11,6 +13,15 @@ import {
 } from '@material-ui/icons';
 
 function Main() {
+    const headerContext = useContext(HeaderContext);
+    const activeSectionRef = useRef(null!);
+
+    useEffect(() => {
+        const activeElement = activeSectionRef.current as HTMLElement;
+        if (activeElement) {
+            activeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+        }
+    }, [headerContext.activeMainPageSection, activeSectionRef, headerContext.clickTimeStamp])
 
     const serviceItems = [
         {
@@ -37,39 +48,44 @@ function Main() {
     
     return (
         <div className="main--container">
-            <section className="main">
-                <div className="constrained--container">
-                    <div className="main--text">
-                        <h1>Administration On Us.</h1>
-                        <h2 className="sub--heading margin-top-20">
-                            <span>We look after your day to day operations</span>
-                            <span className="margin-top-10">so you can focus on growing your business.</span>
-                            <Link to="/" className="get--started--link margin-top-20">Get Started</Link>
-                        </h2>
+            <section
+                className="main"
+                ref={headerContext.activeMainPageSection === 'home' ? activeSectionRef : null}>
+                    <div className="constrained--container">
+                        <div className="main--text">
+                            <h1>Administration On Us.</h1>
+                            <h2 className="sub--heading margin-top-20">
+                                <span>We look after your day to day operations</span>
+                                <span className="margin-top-10">so you can focus on growing your business.</span>
+                                <Link to="/" className="get--started--link margin-top-20">Get Started</Link>
+                            </h2>
+                        </div>
                     </div>
-                </div>
             </section>
 
             <section className="Services">
-                <div className="services--section padding-top-bottom-100 constrained--container">
-                    <p className="heading">What we offer</p>
-                    <div className="sub--heading">Our Services</div>
-                    <ul className="services--list margin-top-50">
-                        {
-                            serviceItems.map((el, index) => 
-                                <li key={index} className="margin-top-20">
-                                    <div className="icon">
-                                        {el.icon}
-                                    </div>
-                                    <div className="primary--text margin-top-20">{el.primaryText}</div>
-                                    <div className="secondary--text margin-top-10">{el.secondaryText}</div>
-                                </li>
-                            )
-                        }
-                    </ul>
+                <div 
+                    className="services--section padding-top-bottom-100 constrained--container" >
+                        <p className="heading"
+                            ref={headerContext.activeMainPageSection === 'services' ? activeSectionRef : null}>What we offer</p>
+                        <div className="sub--heading">Our Services</div>
+                        <ul className="services--list margin-top-50">
+                            {
+                                serviceItems.map((el, index) => 
+                                    <li key={index} className="margin-top-20">
+                                        <div className="icon">
+                                            {el.icon}
+                                        </div>
+                                        <div className="primary--text margin-top-20">{el.primaryText}</div>
+                                        <div className="secondary--text margin-top-10">{el.secondaryText}</div>
+                                    </li>
+                                )
+                            }
+                        </ul>
                 </div>
 
-                <div className="online--poker--section padding-top-bottom-100">
+                <div
+                    className="online--poker--section padding-top-bottom-100">
                     <div className="constrained--container">
                         <div className="sub--heading">Online Poker</div>
                         <div className="description margin-top-30">
@@ -89,10 +105,12 @@ function Main() {
                     </div>
                 </div>
 
-                <div className="contact--section padding-top-bottom-80">
-                    <p className="heading">Interested?</p>
-                    <div className="sub--heading">Contact Us</div>
-                    <Link to="/sign-up" className="registration--link margin-top-40 margin-bottom-80">Sign up for our service today.</Link>
+                <div
+                    className="contact--section padding-top-bottom-80"
+                    ref={headerContext.activeMainPageSection === 'contact-us' ? activeSectionRef : null}>
+                        <p className="heading">Interested?</p>
+                        <div className="sub--heading">Contact Us</div>
+                        <Link to="/sign-up" className="registration--link margin-top-40 margin-bottom-80">Sign up for our service today.</Link>
                 </div>
             </section>
         </div>

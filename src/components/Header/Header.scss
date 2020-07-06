@@ -1,9 +1,10 @@
 header.Header {
     height: 80px;
     background-color: #fff;
-    box-sizing: var(--shadow-type-one);
+    box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.2);
     position: fixed;
     width: 100%;
+    z-index: 2;
     div.container {
         height: 100%;
         display: flex;

@@ -1,10 +1,26 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import './Header.scss';
 import Menu from '../../elements/Menu/Menu';
+import {HeaderContext, ActiveLink} from '../../providers/HeaderProvider';
+
+import {useLocation, useHistory} from 'react-router-dom';
 
 function Header() {
-    const headerMenuClick = (target: string) => {
-        console.log(target)
+    const location = useLocation();
+    const history = useHistory();
+    const headerContext = useContext(HeaderContext);
+
+    const headerMenuClick = (target: ActiveLink) => {
+        // if (location.pathname === '/') {
+        //     headerContext.updateActiveMainPageSection(target);
+        // } else {
+        //     history.push('/');
+        //     headerContext.updateActiveMainPageSection(target);
+        // }
+        if (location.pathname !== '/') {
+            history.push('/');
+        }
+        headerContext.updateActiveMainPageSection(target);
     }
 
     const menuOptions = [
