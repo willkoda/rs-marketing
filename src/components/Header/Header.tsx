@@ -11,12 +11,6 @@ function Header() {
     const headerContext = useContext(HeaderContext);
 
     const headerMenuClick = (target: ActiveLink) => {
-        // if (location.pathname === '/') {
-        //     headerContext.updateActiveMainPageSection(target);
-        // } else {
-        //     history.push('/');
-        //     headerContext.updateActiveMainPageSection(target);
-        // }
         if (location.pathname !== '/') {
             history.push('/');
         }
