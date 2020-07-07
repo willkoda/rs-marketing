@@ -3,6 +3,8 @@ import './SignUp.scss';
 import Input, {ResultInterface} from '../../elements/Input/Input';
 import Select from '../../elements/Select/Select';
 import Button from '../../elements/Button/Button';
+import MobileNumberInput from '../../elements/MobileNumberInput/MobileNumberInput';
+
 import registrationImage from '../../assets/images/registration.jpg';
 
 function SignUp() {
@@ -11,11 +13,18 @@ function SignUp() {
     const [firstName, setFirstName] = useState({...initialState});
     const [lastName, setLastName] = useState({...initialState});
     const [email, setEmail] = useState({...initialState});
-    const [platform, setPlatform] = useState({...initialState});
+    const [mobileNumber, setMobileNumber] = useState({...initialState});
+    const [platform, setPlatform] = useState({...initialState, value: '1'});
     const [clubName, setClubName] = useState({...initialState});
     const [clubID, setClubID] = useState({...initialState});
 
     const [timeStamp, setTimeStamp] = useState(0);
+
+    const platformOptions = [
+        {text: 'PPPoker', value: '1', id: '1'},
+        {text: 'PokerBros', value: '2', id: '2'},
+        {text: 'UPoker', value: '3', id: '3'}
+    ];
 
     const changeHandler = (result: ResultInterface) => {
         const newState = {...result};
@@ -36,6 +45,9 @@ function SignUp() {
                 break;
             case 'clubID':
                     setClubID(newState);
+                break;
+            case 'mobileNumber':
+                    setMobileNumber(newState);
                 break;
             default:
                 throw new Error(`${result.origin} is not a valid origin`);
@@ -141,21 +153,33 @@ function SignUp() {
                             timeStamp={timeStamp}
                         />
 
+                        <MobileNumberInput 
+                            change={changeHandler}
+                            error={mobileNumber.error}
+                            margin="margin-top-20"
+                            id="mobileNumber"
+                            timeStamp={timeStamp}
+                            value={mobileNumber.value}
+                            valid={mobileNumber.valid}
+                        />
+
                         <Select
                             id="owner"
                             margin="margin-top-30"
                             error={platform.error}
-                            options={
-                                [
-                                    {text: 'PPPoker', value: '1'}
-                                ]
-                            }
+                            options={platformOptions}
                             select={
                                 (result) => setPlatform({value: result.value, valid: result.valid, error: ''})
                             }
                             selectColor="var(--medium-grey)"
                             selectText="Select a Platform"
                             initialValue="PPPoker"
+                            // initialValue={
+                            //     (() =>  {
+                            //         const result = platformOptions?.find(el => el.id.toString() === el.value);
+                            //         return result ? result.text : '';
+                            //     })()
+                            // }
                         />
 
                         <Input 

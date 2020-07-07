@@ -130,7 +130,7 @@ function Select(props: Props) {
         }
     }, [pristine, props.selectColor]);
 
-    useEffect(() => {
+    useEffect(() => { // glitched; selecting an option triggers a rerender
         if (props.options) {
             setSelectOptions(props.options);
             setFilteredSelectOptions(props.options);
@@ -138,19 +138,19 @@ function Select(props: Props) {
     }, [props.options]);
 
     useEffect(() => {
-        if (props.selectContent === 'countries' && props.initialValue) {
-            const country = selectOptions.find(element => element.value === props.initialValue);            
-            setOptionSelected(country!.value);
-            input.current.value = country!.text;
-            setPristine(false);
-        }
+        // if (props.selectContent === 'countries' && props.initialValue) {
+        //     const country = selectOptions.find(element => element.value === props.initialValue);            
+        //     setOptionSelected(country!.value);
+        //     input.current.value = country!.text;
+        //     setPristine(false);
+        // }
 
         if (props.initialValue) {
             setOptionSelected(props.initialValue);
             input.current.value = props.initialValue;
             setPristine(false);
         }
-    }, [props.initialValue, props.selectContent, selectOptions])
+    }, [props.initialValue, props.selectContent])
 
     return (
         <div 
@@ -175,6 +175,7 @@ function Select(props: Props) {
                 aria-activedescendant="selected-option"
                 ref={input}
                 onChange={changeHandler}
+                readOnly={true}
             /> 
 
             <ArrowDropDownIcon className="select--icon" ref={arrow}  />
