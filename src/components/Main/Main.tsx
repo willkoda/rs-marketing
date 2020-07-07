@@ -2,6 +2,7 @@ import React, {useEffect, useContext, useRef} from 'react';
 import './Main.scss';
 import './Services.scss';
 import {Link} from 'react-router-dom';
+import mainImage from '../../assets/images/main.jpg';
 
 import {HeaderContext} from '../../providers/HeaderProvider'
 
@@ -26,30 +27,63 @@ function Main() {
     const serviceItems = [
         {
             icon: <AirplayIcon />,
-            primaryText: "Operations Management",
-            secondaryText: "Your directions, our execution. We keep the engine running."
+            primaryText: "Lobby Management",
+            secondaryText: <span className="secondary--text">
+                <p>Creation and monitoring of tables to ensure standard offered games are always ready.</p>
+                <p>Creation of Tournaments and facilitation of deals.</p>
+                <p>weekly cut-off execution</p>
+            </span>
+            
         },
         {
             icon: <GroupIcon />,
             primaryText: "Player Processing",
-            secondaryText: "You grab them, we handle the rest. Applications, queries, transactions."
+            secondaryText: <span className="secondary--text">
+                <p>Loading of player deposit / Claim backs for withdrawals</p>
+                <p>New member application / upgrade to agents and adding of downlines</p>
+            </span>
         },
         {
             icon: <AssessmentIcon />,
             primaryText: "Data Reports and Analytics",
-            secondaryText: "We track activity, so you can focus your strategies."
+            secondaryText: <span className="secondary--text">
+                <p>Weekly RB Computation</p>
+                <p>General accounting services</p>
+            </span>
         },
         {
             icon: <StorageIcon />,
             primaryText: "Other Services",
-            secondaryText: "For that extra boost, we have some premiums."
+            secondaryText: <span className="secondary--text">
+                <p>Operating a 24/7 chat support (platform to be provided by client)</p>
+            </span>
         }
     ];
+
+    const clickHandler = (e: React.MouseEvent) => {
+        const button = e.currentTarget as HTMLButtonElement;
+        const secondaryText = button.parentElement?.querySelector('span.secondary--text') as HTMLSpanElement;
+
+        if (button.classList.contains('expanded')) {
+            secondaryText!.style.cssText = 'opacity: 0; top: -20px';
+        } else {
+            secondaryText!.style.cssText = 'opacity: 1; top: 0px';
+        }
+        button.classList.toggle('expanded');
+    }
     
     return (
         <div className="main--container">
             <section
                 className="main"
+                style={
+                    {
+                        background: `linear-gradient(to right, rgba(0, 0, 0, 0.4), #0000004d), url('${mainImage}')`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                    }
+                }
                 ref={headerContext.activeMainPageSection === 'home' ? activeSectionRef : null}>
                     <div className="constrained--container">
                         <div className="main--text">
@@ -57,7 +91,7 @@ function Main() {
                             <h2 className="sub--heading margin-top-20">
                                 <span>We look after your day to day operations</span>
                                 <span className="margin-top-10">so you can focus on growing your business.</span>
-                                <Link to="/" className="get--started--link margin-top-20">Get Started</Link>
+                                <Link to="/sign-up" className="get--started--link margin-top-20">Get Started</Link>
                             </h2>
                         </div>
                     </div>
@@ -65,7 +99,7 @@ function Main() {
 
             <section className="Services">
                 <div 
-                    className="services--section padding-top-bottom-100 constrained--container" >
+                    className="services--section padding-top-50 constrained--container" >
                         <p className="heading"
                             ref={headerContext.activeMainPageSection === 'services' ? activeSectionRef : null}>What we offer</p>
                         <div className="sub--heading">Our Services</div>
@@ -73,11 +107,11 @@ function Main() {
                             {
                                 serviceItems.map((el, index) => 
                                     <li key={index} className="margin-top-20">
-                                        <div className="icon">
-                                            {el.icon}
-                                        </div>
-                                        <div className="primary--text margin-top-20">{el.primaryText}</div>
-                                        <div className="secondary--text margin-top-10">{el.secondaryText}</div>
+                                        <button className="icon--and--primary--text" onClick={(e) => clickHandler(e)}>
+                                            <span className="icon">{el.icon}</span>
+                                            <span className="primary--text margin-top-bottom-10">{el.primaryText}</span>
+                                        </button>
+                                        {el.secondaryText}
                                     </li>
                                 )
                             }

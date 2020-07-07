@@ -24,38 +24,54 @@ section.Services {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                justify-content: center;
+                justify-content: space-between;
                 @media (max-width: 600px) {
                     flex: 0 1 100%;
                 }
-                div.icon {
-                    width: 100px;
-                    height: 100px;
-                    border-radius: 50%;
-                    background-color: var(--accent-one-shade-two);
-                    box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.2);
-                    transition: box-shadow 280ms ease-in-out;
-                    svg {
-                        color: #fff;
-                        font-size: 50px;
+                button.icon--and--primary--text {
+                    background-color: transparent;
+                    border: none;
+                    flex: 0 1 30%;
+                    width: 100%;
+                    &:hover {
+                        span.icon {
+                            box-shadow: var(--shadow-type-one);
+                        }
+                    } 
+                    span.icon {
+                        width: 100px;
+                        height: 100px;
+                        border-radius: 50%;
+                        background-color: var(--accent-one-shade-two);
+                        box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.2);
+                        transition: box-shadow 280ms ease-in-out;
+                        margin: 0 auto;
+                        svg {
+                            color: #fff;
+                            font-size: 50px;
+                        }
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                     }
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
+                    span.primary--text {
+                        display: block;
+                        font-weight: 600;
+                        font-size: 16px;
+                    }
                 }
-                div.primary--text {
-                    font-weight: 600;
-                    font-size: 16px;
-                }
-                div.secondary--text {
+                span.secondary--text {
+                    flex: 0 1 70%;
                     font-size: 13px;
                     color: var(--medium-grey);
+                    display: grid;
+                    grid-template-rows: repeat(3, 1fr);
+                    row-gap: 10px;
+                    position: relative;
+                    top: -20px;
+                    opacity: 0;
+                    transition: top 280ms ease-in-out, opacity 280ms ease-in-out;
                 }
-                &:hover {
-                    div.icon {
-                        box-shadow: var(--shadow-type-one);
-                    }
-                }   
             }
         }
     }

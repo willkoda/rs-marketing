@@ -3,6 +3,7 @@ import './SignUp.scss';
 import Input, {ResultInterface} from '../../elements/Input/Input';
 import Select from '../../elements/Select/Select';
 import Button from '../../elements/Button/Button';
+import registrationImage from '../../assets/images/registration.jpg';
 
 function SignUp() {
 
@@ -88,8 +89,15 @@ function SignUp() {
 
     return (
         <div className="SignUp padding-top-80">
-            <div className="background--image">
-                <h1 className="main--header">Interested in our services?</h1>
+            <div className="background--image"
+                style={{
+                    background: `linear-gradient(to right, rgba(0, 0, 0, 0.4), #0000004d), url('${registrationImage}')`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                }}
+            >
+                    <h1 className="main--header">Interested in our services?</h1>
             </div>
             <div className="form--section padding-top-bottom-20">
                 <div className="constrained--container form--section--container">
