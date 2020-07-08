@@ -1,13 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import './SignUp.scss';
 import Input, {ResultInterface} from '../../elements/Input/Input';
 import Select from '../../elements/Select/Select';
 import Button from '../../elements/Button/Button';
 import MobileNumberInput from '../../elements/MobileNumberInput/MobileNumberInput';
+import CheckBox from '../../elements/CheckBox/CheckBox';
 
 import registrationImage from '../../assets/images/registration.jpg';
 
 function SignUp() {
+    const othersInput = useRef<HTMLDivElement>(null!);
 
     const initialState = {value: '', valid: true, error: ''};
     const [firstName, setFirstName] = useState({...initialState});
@@ -25,6 +27,14 @@ function SignUp() {
         {text: 'PokerBros', value: '2', id: '2'},
         {text: 'UPoker', value: '3', id: '3'}
     ];
+
+    const modesOfPayment = [
+        {id: 'banks', text: 'Banks'},
+        {id: 'g-cash', text: 'GCash'},
+        {id: 'pay-maya', text: 'PayMaya'},
+        {id: 'coins-ph', text: 'Coins.Ph'},
+        {id: 'bitcoin', text: 'Bitcoin'}
+    ]
 
     const changeHandler = (result: ResultInterface) => {
         const newState = {...result};
@@ -104,6 +114,14 @@ function SignUp() {
         //     }
         // }
     }
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        })
+    }, [])
 
     return (
         <div className="SignUp padding-top-80">
@@ -208,11 +226,35 @@ function SignUp() {
                             timeStamp={timeStamp}
                         />
 
+                        <p className="text-align-left">Available Mode of Payment:</p>
+                        <div className="modes--of--payment">
+                            {
+                                modesOfPayment.map((el, index) => (
+                                    <div key={index} className="checkbox">
+                                        <CheckBox id={el.id} text={el.text} />
+                                    </div>
+                                ))
+                            }
+                            <div className="checkbox">
+                                <CheckBox
+                                    id={'others'}
+                                    text={'Others'}
+                                    checkCallback={(checked: Boolean) => {
+                                        othersInput.current.style.height = checked ? '35px' : '0px';
+                                        const input = othersInput.current.querySelector('input') as HTMLInputElement;
+                                        if (!checked) input.value = '';
+                                    }}
+                                />
+                            </div>
+                            <div className="others--input" ref={othersInput}>
+                                <input type="text"/>
+                            </div>
+                        </div>
+
                         <Button
                             width="250px"
                             text="Submit"
                             backgroundColor="accent--three"
-                            // waveColor="rgba(0, 0, 0, 0.2)"
                             waveColor="blue"
                             margin="margin-top-20"
                         />

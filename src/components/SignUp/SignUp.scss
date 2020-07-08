@@ -10,4 +10,29 @@ div.SignUp {
     div.form--section {
         background-color: #fff;
     }
+
+    div.modes--of--payment {
+        div.checkbox {
+            margin-top: 10px;
+            display: block;
+            text-align: left;
+        }
+
+        div.others--input {
+            text-align: left;
+            overflow: hidden;
+            transition: 280ms height ease-in-out;
+            height: 0px;
+            
+            input {
+                padding: 8px 2px;
+                font-weight: 300;
+                outline: none;
+                width: 180px;
+                border: none;
+                font-size: 13px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+            }
+        }
+    }
 }

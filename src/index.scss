@@ -27,6 +27,10 @@ input[type=submit] {
     cursor: pointer;
 }
 
+button::-moz-focus-inner {
+    border: 0;
+}
+
 input {
     filter: none;
 }

@@ -1,0 +1,48 @@
+label.CheckBox {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    input {
+        position: absolute;
+        visibility: hidden;
+        &:checked + span.svg--container {
+            border-color: var(--accent-one-shade-two);
+        }
+    }
+    input:checked + span path{
+        stroke-dashoffset: 0;
+    }
+    span.svg--container {
+        border-radius: 4px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        padding: 1px;
+        transition: border-color 300ms ease-in-out;
+    }
+    svg {
+        pointer-events: none;
+        path {			
+            fill: none;			
+            stroke: var(--accent-one-shade-three);
+            stroke-width: 4px;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 70;
+            stroke-dashoffset: 71;
+            transition: stroke-dashoffset 300ms ease-in-out;
+        }
+    }
+    span.svg--checkbox__text {
+        font-size: 13px;
+        color: var(--dark-text);
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        @media (max-width: 450px) {
+            font-size: 12px;
+        }
+    }
+}
