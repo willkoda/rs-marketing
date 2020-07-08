@@ -26,10 +26,11 @@ function Header() {
     return (
         <header className="Header">
             <div className="constrained--container container">
-                <div className="site--name">
-                    <div className="name">ADMIN DESK</div>
-                    <div className="description">With ease, with US.</div>
+                <div className="application--name">
+                    <span>ADMIN</span>
+                    <span className="colored--text">DESK</span>
                 </div>
+
                 <ul className="navigation--links">
                     {
                         menuOptions.map(

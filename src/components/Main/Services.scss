@@ -94,9 +94,27 @@ section.Services {
             li {
                 flex: 0 1 24%;
                 margin-top: 10px;
-                color: var(--accent-one-shade-three);
+                &:hover a::after {
+                    transform: scaleX(1);
+                }
                 @media (max-width: 600px) {
                     flex: 0 1 100%;
+                }
+                a {
+                    color: var(--accent-one-shade-three);
+                    position: relative;
+                    padding-bottom: 5px;
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        height: 2px;
+                        width: 100%;
+                        background-color: var(--accent-one-shade-three);
+                        transform: scaleX(0);
+                        transition: transform 200ms ease-in-out;
+                    }
                 }
             }
         }

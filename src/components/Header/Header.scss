@@ -9,18 +9,15 @@ header.Header {
         height: 100%;
         display: flex;
         justify-content: space-between;
-        div.site--name {
+
+        div.application--name {
+            font-size: 24px;
+            font-weight: 600;
+            text-align: left;
             display: flex;
-            align-items: flex-start;
-            flex-direction: column;
-            justify-content: center;
-            div.name {
-                font-size: 20px;
-                font-weight: 700;
-            }
-            div.description {
-                font-weight: 400;
-                font-size: 13px;
+            align-items: center;
+            span.colored--text {
+                color:  var(--base);
             }
         }
 

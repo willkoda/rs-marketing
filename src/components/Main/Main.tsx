@@ -16,6 +16,17 @@ import {
 function Main() {
     const headerContext = useContext(HeaderContext);
     const activeSectionRef = useRef(null!);
+    const countries = [
+        'Australia',
+        'Canada',
+        'New Zealand',
+        'UK',
+        'US',
+        'India',
+        'Malaysia',
+        'Singapore',
+        'Thailand'
+    ];
 
     useEffect(() => {
         const activeElement = activeSectionRef.current as HTMLElement;
@@ -145,15 +156,13 @@ function Main() {
                             Join the world’s most popular online Poker games with more tables and more Poker tournaments anywhere online!
                         </div>
                         <ul className="game--links margin-top-30">
-                            <li>Play in Australia</li>
-                            <li>Play in Canada</li>
-                            <li>Play in New Zealand</li>
-                            <li>Play in UK</li>
-                            <li>Play in US</li>
-                            <li>Play in India</li>
-                            <li>Play in Malaysia</li>
-                            <li>Play in Singapore</li>
-                            <li>Play in Thailand</li>
+                            {countries.map((el, index) => (
+                                <li key={index}>
+                                    <Link 
+                                        to={{pathname: "/sign-up", state: {formType: 'player'}}}>
+                                            Play in {el}</Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </div>
