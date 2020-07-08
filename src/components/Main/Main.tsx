@@ -28,47 +28,66 @@ function Main() {
         {
             icon: <AirplayIcon />,
             primaryText: "Lobby Management",
-            secondaryText: <span className="secondary--text">
-                <p>Creation and monitoring of tables to ensure standard offered games are always ready.</p>
-                <p>Creation of Tournaments and facilitation of deals.</p>
-                <p>weekly cut-off execution</p>
-            </span>
-            
+            secondaryText: (
+                <span className="secondary--text">
+                    <span className="secondary--text__content">
+                        <p>Creation and monitoring of tables to ensure standard offered games are always ready.</p>
+                        <p>Creation of Tournaments and facilitation of deals.</p>
+                        <p>weekly cut-off execution</p>
+                    </span>
+                </span>
+            )
         },
         {
             icon: <GroupIcon />,
             primaryText: "Player Processing",
-            secondaryText: <span className="secondary--text">
-                <p>Loading of player deposit / Claim backs for withdrawals</p>
-                <p>New member application / upgrade to agents and adding of downlines</p>
-            </span>
+            secondaryText: (
+                <span className="secondary--text">
+                    <span className="secondary--text__content">
+                        <p>Loading of player deposit / Claim backs for withdrawals</p>
+                        <p>New member application / upgrade to agents and adding of downlines</p>
+                    </span>
+                </span>
+            )
         },
         {
             icon: <AssessmentIcon />,
             primaryText: "Data Reports and Analytics",
-            secondaryText: <span className="secondary--text">
-                <p>Weekly RB Computation</p>
-                <p>General accounting services</p>
-            </span>
+            secondaryText: (
+                <span className="secondary--text">
+                    <span className="secondary--text__content">
+                        <p>Weekly RB Computation</p>
+                        <p>General accounting services</p>
+                    </span>
+                </span>
+            )
         },
         {
             icon: <StorageIcon />,
             primaryText: "Other Services",
-            secondaryText: <span className="secondary--text">
-                <p>Operating a 24/7 chat support (platform to be provided by client)</p>
-            </span>
+            secondaryText: (
+                <span className="secondary--text">
+                    <span className="secondary--text__content">
+                        <p>Operating a 24/7 chat support (platform to be provided by client)</p>
+                    </span>
+                </span>
+            )
         }
     ];
 
     const clickHandler = (e: React.MouseEvent) => {
         const button = e.currentTarget as HTMLButtonElement;
         const secondaryText = button.parentElement?.querySelector('span.secondary--text') as HTMLSpanElement;
+        const secondaryTextContent = secondaryText?.querySelector('span.secondary--text__content') as HTMLSpanElement;
 
         if (button.classList.contains('expanded')) {
-            secondaryText!.style.cssText = 'opacity: 0; top: -20px';
+            secondaryTextContent!.style.cssText = 'opacity: 0';
+            secondaryText!.style.cssText = 'height: 0px';
         } else {
-            secondaryText!.style.cssText = 'opacity: 1; top: 0px';
+            secondaryTextContent!.style.cssText = 'opacity: 1';
+            secondaryText!.style.cssText = `height: ${secondaryTextContent.scrollHeight}px`;
         }
+
         button.classList.toggle('expanded');
     }
     
@@ -99,7 +118,7 @@ function Main() {
 
             <section className="Services">
                 <div 
-                    className="services--section padding-top-50 constrained--container" >
+                    className="services--section padding-top-bottom-50 constrained--container" >
                         <p className="heading"
                             ref={headerContext.activeMainPageSection === 'services' ? activeSectionRef : null}>What we offer</p>
                         <div className="sub--heading">Our Services</div>

@@ -40,14 +40,17 @@ function SignUp() {
             case 'email':
                     setEmail(newState);
                 break;
+            case 'mobileNumber':
+                    setMobileNumber(newState);
+                break;
+            case 'platform':
+                    setPlatform(newState);
+                break;
             case 'clubName':
                     setClubName(newState);
                 break;
             case 'clubID':
                     setClubID(newState);
-                break;
-            case 'mobileNumber':
-                    setMobileNumber(newState);
                 break;
             default:
                 throw new Error(`${result.origin} is not a valid origin`);
@@ -58,10 +61,13 @@ function SignUp() {
         e.preventDefault();
         setTimeStamp(Date.now());
 
-        // setName({...name, error: name.valid ? '' : name.error || 'Name is invalid'});
-        // setIdentifier({...identifier, error: identifier.valid ? '' : 'Club ID is invalid'});
-        // setURL({...url, error: url.valid ? '' : 'URL is invalid'});
-        // setOwner({...owner, error: owner.valid ? '' : 'Owner is invalid'});
+        setFirstName({...firstName, error: firstName.valid ? '' : firstName.error || 'First name is invalid'});
+        setLastName({...lastName, error: lastName.valid ? '' : lastName.error || 'Last name is invalid'});
+        setEmail({...email, error: email.valid ? '' : email.error || 'Email is invalid'});
+        setMobileNumber({...mobileNumber, error: mobileNumber.valid ? '' : mobileNumber.error || 'Mobile Number is invalid'});
+        setPlatform({...platform, error: platform.valid ? '' : platform.error || 'Platform is invalid'});
+        setClubName({...clubName, error: clubName.valid ? '' : clubName.error || 'Club Name is invalid'});
+        setClubID({...clubID, error: clubID.valid ? '' : clubID.error || 'Club ID is invalid'});
 
         // const requestData = {
         //     id: club.id,
@@ -164,7 +170,7 @@ function SignUp() {
                         />
 
                         <Select
-                            id="owner"
+                            id="platform"
                             margin="margin-top-30"
                             error={platform.error}
                             options={platformOptions}
@@ -174,12 +180,6 @@ function SignUp() {
                             selectColor="var(--medium-grey)"
                             selectText="Select a Platform"
                             initialValue="PPPoker"
-                            // initialValue={
-                            //     (() =>  {
-                            //         const result = platformOptions?.find(el => el.id.toString() === el.value);
-                            //         return result ? result.text : '';
-                            //     })()
-                            // }
                         />
 
                         <Input 
