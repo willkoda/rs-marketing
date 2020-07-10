@@ -1,37 +1,45 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import Input, {ResultInterface} from '../../../elements/Input/Input';
 import Select from '../../../elements/Select/Select';
 import Button from '../../../elements/Button/Button';
 import MobileNumberInput from '../../../elements/MobileNumberInput/MobileNumberInput';
 import CheckBox from '../../../elements/CheckBox/CheckBox';
 
+import {useHistory} from 'react-router-dom';
+
+import {ModalContext} from '../../../providers/ModalProvider';
+import axios from '../../../auxiliary/axios';
+
+interface Option {
+    value: string;
+    text: string;
+}
+
+interface SelectedPaymentMode {
+    valid: boolean;
+    error: string;
+    value: Array<{id: string, other_data: string}>
+}
+
 function SignUpOwner() {
+    const history = useHistory();
+    const modal = useContext(ModalContext);
+    const [modesOfPayment, setModesOfPayment] = useState<Array<Option>>([]);
+    const [gamePlatforms, setGamePlatforms] = useState<Array<Option>>([]);
+
     const othersInput = useRef<HTMLDivElement>(null!);
 
-    const initialState = {value: '', valid: true, error: ''};
+    const initialState = {value: '', valid: false, error: ''};
     const [firstName, setFirstName] = useState({...initialState});
     const [lastName, setLastName] = useState({...initialState});
     const [email, setEmail] = useState({...initialState});
     const [mobileNumber, setMobileNumber] = useState({...initialState});
-    const [platform, setPlatform] = useState({...initialState, value: '1'});
+    const [platform, setPlatform] = useState({...initialState, value: '1', valid: true});
     const [clubName, setClubName] = useState({...initialState});
     const [clubID, setClubID] = useState({...initialState});
+    const [selectedModesOfPayment, setSelectedModesOfPayment] = useState<SelectedPaymentMode>({value: [], valid: false, error:  ''});
 
     const [timeStamp, setTimeStamp] = useState(0);
-
-    const platformOptions = [
-        {text: 'PPPoker', value: '1', id: '1'},
-        {text: 'PokerBros', value: '2', id: '2'},
-        {text: 'UPoker', value: '3', id: '3'}
-    ];
-
-    const modesOfPayment = [
-        {id: 'banks', text: 'Banks'},
-        {id: 'g-cash', text: 'GCash'},
-        {id: 'pay-maya', text: 'PayMaya'},
-        {id: 'coins-ph', text: 'Coins.Ph'},
-        {id: 'bitcoin', text: 'Bitcoin'}
-    ]
 
     const changeHandler = (result: ResultInterface) => {
         const newState = {...result};
@@ -75,41 +83,67 @@ function SignUpOwner() {
         setPlatform({...platform, error: platform.valid ? '' : platform.error || 'Platform is invalid'});
         setClubName({...clubName, error: clubName.valid ? '' : clubName.error || 'Club Name is invalid'});
         setClubID({...clubID, error: clubID.valid ? '' : clubID.error || 'Club ID is invalid'});
+        setSelectedModesOfPayment({
+            ...selectedModesOfPayment,
+            error: selectedModesOfPayment.value.length < 1 ? 'Please select at least 1 mode of payment' : '',
+        });
 
-        // const requestData = {
-        //     id: club.id,
-        //     name: name.value,
-        //     identifier: identifier.value,
-        //     url: url.value,
-        //     user_id: owner.value
-        // }
+        const requestData = {
+            first_name: firstName.value,
+            last_name: lastName.value,
+            email: email.value,
+            mobile_number: mobileNumber.value,
+            platform: platform.value,
+            club_name: clubName.value,
+            club_id: clubID.value,
+            selected_modes_of_payment: JSON.stringify(selectedModesOfPayment.value)
+        }
 
-        // const result = [
-        //     name,
-        //     identifier,
-        //     url,
-        //     owner
-        // ].map(e => e.valid);
-
-        // if (result.every(valid => valid)) {            
-        //     try {
-        //         await axios.patch(`/v1/organizations/${club.id}`, requestData);
-
-        //         notice.setNoticeText('Successfully updated club information.');
-        //         notice.setNoticeState('success');
-        //         notice.setNoticeTimestamp(Date.now()); 
-
-        //         successCalback();
-        //         getOwners();
-        //         modal.hideModal();
-                
-                
-        //     } catch(error) {
-        //         if (/index_organizations_on_identifier/.test(error.response.data.error)) {
-        //             setIdentifier({...identifier, valid: false, error: 'Club ID is already taken'});
-        //         }
-        //     }
-        // }
+        const result = [
+            firstName,
+            lastName,
+            email,
+            mobileNumber,
+            platform,
+            clubName,
+            clubID,
+            selectedModesOfPayment
+        ].map(e => e.valid);
+        if (result.every(valid => valid)) {            
+            try {
+                await axios.post('/v1/marketing/create-club-owner-registration', requestData);
+                modal.setModalData({
+                    header: 'Success.',
+                    content: <div className="padding-top-bottom-20 padding-left-right-20" style={{height: "100%"}}>
+                        <div>
+                            Thank you for reaching out to us.
+                            An account specialist will be contacting you shortly. Thanks! Have a great day.
+                        </div>
+                        <button
+                            onClick={() => {
+                                modal.hideModal();
+                                history.push('/');
+                            }}
+                            className="ripple margin-top-30"
+                            style={{
+                                backgroundColor: 'var(--accent-three-shade-one)',
+                                padding: '8px 10px',
+                                color: '#fff',
+                                width: '100px',
+                                boxShadow: '0 2px 4px 1px rgba(0, 0, 0, 0.2)',
+                                borderRadius: '4px',
+                                border: 'none',
+                                fontSize: '14px'
+                            }}
+                        >Ok</button>
+                    </div>,
+                    confirmationText: 'Ok'
+                })
+                modal.toggleModal();
+            } catch(error) {
+                console.log(error.response)
+            }
+        }
     }
 
     useEffect(() => {
@@ -118,7 +152,29 @@ function SignUpOwner() {
             left: 0,
             behavior: 'smooth'
         })
+
+        const initModesOfPayment = async () => {
+            const result = await axios.get('/v1/marketing/get-modes-of-payment');
+            const {modes_of_payment} = result.data;
+            setModesOfPayment(modes_of_payment);
+        }
+        initModesOfPayment();
+
+        const initGamePlatforms = async () => {
+            const result = await axios.get('/v1/marketing/get-game-platforms');
+            const {game_platforms} = result.data;
+            setGamePlatforms(game_platforms);
+
+            setPlatform((oldPlatform) => ({...oldPlatform, value: game_platforms[0].value, valid: true}))
+        }
+        initGamePlatforms();
     }, [])
+
+    useEffect(() => {
+        if (!modal.modalVisible) {
+
+        }
+    }, [modal.modalVisible])
 
     return (
         <div className="constrained--container form--section--container">
@@ -176,13 +232,13 @@ function SignUpOwner() {
                     id="platform"
                     margin="margin-top-30"
                     error={platform.error}
-                    options={platformOptions}
+                    options={gamePlatforms}
                     select={
                         (result) => setPlatform({value: result.value, valid: result.valid, error: ''})
                     }
                     selectColor="var(--medium-grey)"
                     selectText="Select a Platform"
-                    initialValue="PPPoker"
+                    initialValue={gamePlatforms[0]?.text}
                 />
 
                 <Input 
@@ -205,7 +261,7 @@ function SignUpOwner() {
                     placeholder="Club ID" 
                     value={clubID.value} 
                     changeCallback={changeHandler}
-                    validatedProps={{minLength: 3, english: true}}
+                    validatedProps={{minLength: 3}}
                     valid={clubID.valid} 
                     error={clubID.error}
                     timeStamp={timeStamp}
@@ -216,24 +272,56 @@ function SignUpOwner() {
                     {
                         modesOfPayment.map((el, index) => (
                             <div key={index} className="checkbox">
-                                <CheckBox id={el.id} text={el.text} />
+                                <CheckBox 
+                                    value={el.value} text={el.text}
+                                    checkCallback={
+                                        ({checked, value}) => {
+                                            const othersOption = el.text === 'Others';
+                                            const input = othersInput.current.querySelector('input') as HTMLInputElement;
+                                            const selectedModes: Array<{id: string, other_data: string}> = [...selectedModesOfPayment.value];
+
+                                            if (othersOption) {
+                                                othersInput.current.style.height = checked ? '35px' : '0px';
+                                                if (!checked) input.value = '';
+                                            }
+
+                                            if (checked) {
+                                                selectedModes.push({id: value, other_data: ''});
+                                            } else {
+                                                const index = selectedModes.findIndex((el) => el.id === value);
+                                                selectedModes.splice(index, 1);
+                                            }
+                                            setSelectedModesOfPayment({...selectedModesOfPayment, value: selectedModes, valid: selectedModes.length > 0});
+                                        }
+                                    }
+                                />
                             </div>
                         ))
                     }
-                    <div className="checkbox">
-                        <CheckBox
-                            id={'others'}
-                            text={'Others'}
-                            checkCallback={(checked: Boolean) => {
-                                othersInput.current.style.height = checked ? '35px' : '0px';
-                                const input = othersInput.current.querySelector('input') as HTMLInputElement;
-                                if (!checked) input.value = '';
-                            }}
-                        />
+                    <div
+                        className="others--input"
+                        ref={othersInput}
+                        onChange={
+                            (event) => {
+                                const target = event.target as HTMLInputElement;
+                                const selectedModes = [...selectedModesOfPayment.value];
+                                const otherOptionID = modesOfPayment.find(el => el.text === 'Others')?.value;
+
+                                const index = selectedModes.findIndex(el => el.id === otherOptionID);
+
+                                if (index !== -1) {
+                                    selectedModes.splice(index, 1, {
+                                        ...selectedModes[index],
+                                        other_data: target.value
+                                    })
+                                    setSelectedModesOfPayment((oldValue) => ({...oldValue, value: selectedModes}))
+                                }
+                            }
+                        }
+                    >
+                            <input type="text" />
                     </div>
-                    <div className="others--input" ref={othersInput}>
-                        <input type="text" />
-                    </div>
+                    <div className="input--error">{selectedModesOfPayment.error}</div>
                 </div>
 
                 <Button

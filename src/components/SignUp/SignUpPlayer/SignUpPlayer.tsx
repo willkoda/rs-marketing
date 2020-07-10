@@ -189,15 +189,15 @@ function SignUpPlayer() {
                     {
                         stakes.map((el, index) => (
                             <div key={index} className="checkbox">
-                                <CheckBox id={el.id} text={el.text} />
+                                <CheckBox value={el.id} text={el.text} />
                             </div>
                         ))
                     }
                     <div className="checkbox">
                         <CheckBox
-                            id={'others'}
+                            value={'others'}
                             text={'Others'}
-                            checkCallback={(checked: Boolean) => {
+                            checkCallback={({checked, value}) => {
                                 otherStakesInput.current.style.height = checked ? '35px' : '0px';
                                 const input = otherStakesInput.current.querySelector('input') as HTMLInputElement;
                                 if (!checked) input.value = '';

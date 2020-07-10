@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useCallback} from 'react';
+import React, {useRef, useLayoutEffect, useEffect, useCallback} from 'react';
 import './Input.scss';
 
 interface Props {
@@ -108,7 +108,7 @@ function Input(props: Props) {
         if (props.value.length > 0) focus();
     }, [props.value, focus])
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         inputErrorRef.current.style.opacity = '0';
         const timeout = setTimeout(() => {
             inputErrorRef.current.style.opacity = '1';

@@ -55,7 +55,7 @@ function MobileNumberInput(props: Props) {
             </label>
             <div 
                 ref={errorElement}
-                className="input--error" 
+                className="input--error text-align-left" 
                 style={{margin: '3px 6px', visibility: !props.valid ? 'visible' : 'hidden'}}>
                 {props.error}</div>
         </div>
