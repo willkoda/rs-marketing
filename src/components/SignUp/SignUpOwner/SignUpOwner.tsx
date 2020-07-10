@@ -162,7 +162,11 @@ function SignUpOwner({gamePlatforms}: Props) {
     }, [])
 
     useEffect(() => {
-        setPlatform((oldPlatform) => ({...oldPlatform, value: gamePlatforms[0]?.value, valid: true}))
+        setPlatform((oldPlatform) => ({
+            ...oldPlatform,
+            value: gamePlatforms[0] ? gamePlatforms[0].value : '',
+            valid: gamePlatforms[0] ? true : false 
+        }))
     }, [gamePlatforms])
 
     return (
@@ -227,7 +231,7 @@ function SignUpOwner({gamePlatforms}: Props) {
                     }
                     selectColor="var(--medium-grey)"
                     selectText="Select a Platform"
-                    initialValue={gamePlatforms[0]?.text}
+                    initialValue={gamePlatforms[0] ? gamePlatforms[0].text : ''}
                 />
 
                 <Input 
