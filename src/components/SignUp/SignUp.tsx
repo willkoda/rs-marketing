@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './SignUp.scss';
 import SignUpOwner from './SignUpOwner/SignUpOwner';
 import SignUpPlayer from './SignUpPlayer/SignUpPlayer';
 
+import axios from '../../auxiliary/axios';
 import registrationImage from '../../assets/images/registration.jpg';
 
 interface Props {
@@ -13,16 +14,27 @@ interface Props {
     }
 }
 function SignUp({location}: Props) {
+    const [gamePlatforms, setGamePlatforms] = useState<Array<Option>>([]);
+
     const renderForm = () => {
         if (location.state) {
             if (location.state && location.state.formType === 'player') {
                 return  <SignUpPlayer />;
             }
-            return <SignUpOwner />;
+            return <SignUpOwner gamePlatforms={gamePlatforms} />;
         }
         
-        return <SignUpOwner />;
+        return <SignUpOwner gamePlatforms={gamePlatforms} />;
     }
+
+    useEffect(() => {
+        const initGamePlatforms = async () => {
+            const result = await axios.get('/v1/marketing/get-game-platforms');
+            const {game_platforms} = result.data;
+            setGamePlatforms(game_platforms);
+        }
+        initGamePlatforms();
+    }, [])
 
     return (
         <div className="SignUp padding-top-80">
@@ -41,6 +53,11 @@ function SignUp({location}: Props) {
             </div>
         </div>
     )
+}
+
+export interface Option {
+    value: string;
+    text: string;
 }
 
 export default SignUp;

@@ -6,14 +6,10 @@ import MobileNumberInput from '../../../elements/MobileNumberInput/MobileNumberI
 import CheckBox from '../../../elements/CheckBox/CheckBox';
 
 import {useHistory} from 'react-router-dom';
+import {Option} from '../SignUp';
 
 import {ModalContext} from '../../../providers/ModalProvider';
 import axios from '../../../auxiliary/axios';
-
-interface Option {
-    value: string;
-    text: string;
-}
 
 interface SelectedPaymentMode {
     valid: boolean;
@@ -21,11 +17,14 @@ interface SelectedPaymentMode {
     value: Array<{id: string, other_data: string}>
 }
 
-function SignUpOwner() {
+interface Props {
+    gamePlatforms: Array<Option>
+}
+
+function SignUpOwner({gamePlatforms}: Props) {
     const history = useHistory();
     const modal = useContext(ModalContext);
     const [modesOfPayment, setModesOfPayment] = useState<Array<Option>>([]);
-    const [gamePlatforms, setGamePlatforms] = useState<Array<Option>>([]);
 
     const othersInput = useRef<HTMLDivElement>(null!);
 
@@ -109,6 +108,7 @@ function SignUpOwner() {
             clubID,
             selectedModesOfPayment
         ].map(e => e.valid);
+    
         if (result.every(valid => valid)) {            
             try {
                 await axios.post('/v1/marketing/create-club-owner-registration', requestData);
@@ -159,22 +159,11 @@ function SignUpOwner() {
             setModesOfPayment(modes_of_payment);
         }
         initModesOfPayment();
-
-        const initGamePlatforms = async () => {
-            const result = await axios.get('/v1/marketing/get-game-platforms');
-            const {game_platforms} = result.data;
-            setGamePlatforms(game_platforms);
-
-            setPlatform((oldPlatform) => ({...oldPlatform, value: game_platforms[0].value, valid: true}))
-        }
-        initGamePlatforms();
     }, [])
 
     useEffect(() => {
-        if (!modal.modalVisible) {
-
-        }
-    }, [modal.modalVisible])
+        setPlatform((oldPlatform) => ({...oldPlatform, value: gamePlatforms[0]?.value, valid: true}))
+    }, [gamePlatforms])
 
     return (
         <div className="constrained--container form--section--container">

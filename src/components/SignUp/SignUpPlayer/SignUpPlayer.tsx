@@ -5,7 +5,11 @@ import Button from '../../../elements/Button/Button';
 import MobileNumberInput from '../../../elements/MobileNumberInput/MobileNumberInput';
 import CheckBox from '../../../elements/CheckBox/CheckBox';
 
+import {Option} from '../SignUp';
+
 function SignUpPlayer() {
+    const [gamePlatforms, setGamePlatforms] = useState<Array<Option>>([]);
+
     const otherPlatformInput = useRef<HTMLDivElement>(null!);
     const otherStakesInput = useRef<HTMLDivElement>(null!);
 
