@@ -298,7 +298,11 @@ function SignUpOwner({gamePlatforms}: Props) {
                             (event) => {
                                 const target = event.target as HTMLInputElement;
                                 const selectedModes = [...selectedModesOfPayment.value];
-                                const otherOptionID = modesOfPayment.find(el => el.text === 'Others')?.value;
+                                // const otherOptionID = modesOfPayment.find(el => el.text === 'Others')?.value;
+                                // const otherOptionID = modesOfPayment.find(el => el.text === 'Others')?.value;
+                                const mode = modesOfPayment.find(el => el.text === 'Others');
+
+                                const otherOptionID = mode ? mode.value : -1
 
                                 const index = selectedModes.findIndex(el => el.id === otherOptionID);
 
