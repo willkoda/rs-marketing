@@ -19,7 +19,7 @@ function SignUp({location}: Props) {
     const renderForm = () => {
         if (location.state) {
             if (location.state && location.state.formType === 'player') {
-                return  <SignUpPlayer />;
+                return  <SignUpPlayer gamePlatforms={gamePlatforms} />;
             }
             return <SignUpOwner gamePlatforms={gamePlatforms} />;
         }

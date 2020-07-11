@@ -88,13 +88,15 @@ function SignUpOwner({gamePlatforms}: Props) {
         });
 
         const requestData = {
+            club_owner_params: {
+                club_name: clubName.value,
+                club_identifier: clubID.value,
+            },
             first_name: firstName.value,
             last_name: lastName.value,
             email: email.value,
             mobile_number: mobileNumber.value,
-            platform: platform.value,
-            club_name: clubName.value,
-            club_id: clubID.value,
+            game_platform_id: platform.value,
             selected_modes_of_payment: JSON.stringify(selectedModesOfPayment.value)
         }
 

@@ -4,14 +4,18 @@ import Select from '../../../elements/Select/Select';
 import Button from '../../../elements/Button/Button';
 import MobileNumberInput from '../../../elements/MobileNumberInput/MobileNumberInput';
 import CheckBox from '../../../elements/CheckBox/CheckBox';
+import axios from '../../../auxiliary/axios';
 
 import {Option} from '../SignUp';
 
-function SignUpPlayer() {
-    const [gamePlatforms, setGamePlatforms] = useState<Array<Option>>([]);
+interface Props {
+    gamePlatforms: Array<Option>
+}
 
+function SignUpPlayer({gamePlatforms}: Props) {
     const otherPlatformInput = useRef<HTMLDivElement>(null!);
     const otherStakesInput = useRef<HTMLDivElement>(null!);
+    const [stakeOptions, setStakeOptions] = useState<Array<Option>>([]);
 
     const initialState = {value: '', valid: true, error: ''};
     const [firstName, setFirstName] = useState({...initialState});
@@ -22,18 +26,11 @@ function SignUpPlayer() {
 
     const [timeStamp, setTimeStamp] = useState(0);
 
-    const platformOptions = [
-        {text: 'PPPoker', value: '1', id: '1'},
-        {text: 'PokerBros', value: '2', id: '2'},
-        {text: 'UPoker', value: '3', id: '3'},
-        {text: 'Others', value: '4', id: '4'}
-    ];
-
-    const stakes = [
-        {id: 'micro', text: 'Micro'},
-        {id: 'low', text: 'Low'},
-        {id: 'high', text: 'High'}
-    ]
+    // const stakes = [
+    //     {id: 'micro', text: 'Micro'},
+    //     {id: 'low', text: 'Low'},
+    //     {id: 'high', text: 'High'}
+    // ]
 
     const changeHandler = (result: ResultInterface) => {
         const newState = {...result};
@@ -107,11 +104,26 @@ function SignUpPlayer() {
     }
 
     useEffect(() => {
+        setPlatform((oldPlatform) => ({
+            ...oldPlatform,
+            value: gamePlatforms.length > 0 ? gamePlatforms[0].value : '',
+            valid: gamePlatforms.length > 0
+        }))
+    }, [gamePlatforms])
+
+    useEffect(() => {
         window.scrollTo({
             top: 0,
             left: 0,
             behavior: 'smooth'
-        })
+        });
+
+        const initModesOfPayment = async () => {
+            const result = await axios.get('/v1/marketing/get-stakes');
+            const {stakes} = result.data;
+            setStakeOptions(stakes);
+        }
+        initModesOfPayment();
     }, [])
 
     return (
@@ -170,7 +182,7 @@ function SignUpPlayer() {
                     id="platform"
                     margin="margin-top-30"
                     error={platform.error}
-                    options={platformOptions}
+                    options={gamePlatforms}
                     select={
                         (result) => {
                             setPlatform({value: result.value, valid: result.valid, error: ''});
@@ -191,23 +203,12 @@ function SignUpPlayer() {
                 <p className="text-align-left">Stakes:</p>
                 <div className="stakes">
                     {
-                        stakes.map((el, index) => (
+                        stakeOptions.map((el, index) => (
                             <div key={index} className="checkbox">
-                                <CheckBox value={el.id} text={el.text} />
+                                <CheckBox value={el.value} text={el.text} />
                             </div>
                         ))
                     }
-                    <div className="checkbox">
-                        <CheckBox
-                            value={'others'}
-                            text={'Others'}
-                            checkCallback={({checked, value}) => {
-                                otherStakesInput.current.style.height = checked ? '35px' : '0px';
-                                const input = otherStakesInput.current.querySelector('input') as HTMLInputElement;
-                                if (!checked) input.value = '';
-                            }}
-                        />
-                    </div>
                     <div className="others--input" ref={otherStakesInput}>
                         <input type="text" placeholder="Other stakes"/>
                     </div>
