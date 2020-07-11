@@ -265,7 +265,7 @@ function SignUpOwner({gamePlatforms}: Props) {
                     {
                         modesOfPayment.map((el, index) => (
                             <div key={index} className="checkbox">
-                                <CheckBox 
+                                {/* <CheckBox 
                                     value={el.value} text={el.text}
                                     checkCallback={
                                         ({checked, value}) => {
@@ -287,7 +287,7 @@ function SignUpOwner({gamePlatforms}: Props) {
                                             setSelectedModesOfPayment({...selectedModesOfPayment, value: selectedModes, valid: selectedModes.length > 0});
                                         }
                                     }
-                                />
+                                /> */}
                             </div>
                         ))
                     }
