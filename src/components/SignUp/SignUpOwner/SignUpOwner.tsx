@@ -231,7 +231,7 @@ function SignUpOwner({gamePlatforms}: Props) {
                     }
                     selectColor="var(--medium-grey)"
                     selectText="Select a Platform"
-                    initialValue={gamePlatforms[0] ? gamePlatforms[0].text : ''}
+                    // initialValue={gamePlatforms[0] ? gamePlatforms[0].text : ''}
                 />
 
                 <Input 
