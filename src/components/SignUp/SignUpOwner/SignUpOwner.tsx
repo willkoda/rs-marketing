@@ -263,33 +263,33 @@ function SignUpOwner({gamePlatforms}: Props) {
                 <p className="text-align-left">Available Mode of Payment:</p>
                 <div className="modes--of--payment">
                     {
-                        modesOfPayment.map((el, index) => (
-                            <div key={index} className="checkbox">
-                                {/* <CheckBox 
-                                    value={el.value} text={el.text}
-                                    checkCallback={
-                                        ({checked, value}) => {
-                                            const othersOption = el.text === 'Others';
-                                            const input = othersInput.current.querySelector('input') as HTMLInputElement;
-                                            const selectedModes: Array<{id: string, other_data: string}> = [...selectedModesOfPayment.value];
+                        // modesOfPayment.map((el, index) => (
+                        //     <div key={index} className="checkbox">
+                        //         <CheckBox 
+                        //             value={el.value} text={el.text}
+                        //             checkCallback={
+                        //                 ({checked, value}) => {
+                        //                     const othersOption = el.text === 'Others';
+                        //                     const input = othersInput.current.querySelector('input') as HTMLInputElement;
+                        //                     const selectedModes: Array<{id: string, other_data: string}> = [...selectedModesOfPayment.value];
 
-                                            if (othersOption) {
-                                                othersInput.current.style.height = checked ? '35px' : '0px';
-                                                if (!checked) input.value = '';
-                                            }
+                        //                     if (othersOption) {
+                        //                         othersInput.current.style.height = checked ? '35px' : '0px';
+                        //                         if (!checked) input.value = '';
+                        //                     }
 
-                                            if (checked) {
-                                                selectedModes.push({id: value, other_data: ''});
-                                            } else {
-                                                const index = selectedModes.findIndex((el) => el.id === value);
-                                                selectedModes.splice(index, 1);
-                                            }
-                                            setSelectedModesOfPayment({...selectedModesOfPayment, value: selectedModes, valid: selectedModes.length > 0});
-                                        }
-                                    }
-                                /> */}
-                            </div>
-                        ))
+                        //                     if (checked) {
+                        //                         selectedModes.push({id: value, other_data: ''});
+                        //                     } else {
+                        //                         const index = selectedModes.findIndex((el) => el.id === value);
+                        //                         selectedModes.splice(index, 1);
+                        //                     }
+                        //                     setSelectedModesOfPayment({...selectedModesOfPayment, value: selectedModes, valid: selectedModes.length > 0});
+                        //                 }
+                        //             }
+                        //         />
+                        //     </div>
+                        // ))
                     }
                     {/* <div
                         className="others--input"
