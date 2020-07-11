@@ -291,15 +291,13 @@ function SignUpOwner({gamePlatforms}: Props) {
                             </div>
                         ))
                     }
-                    <div
+                    {/* <div
                         className="others--input"
                         ref={othersInput}
                         onChange={
                             (event) => {
                                 const target = event.target as HTMLInputElement;
                                 const selectedModes = [...selectedModesOfPayment.value];
-                                // const otherOptionID = modesOfPayment.find(el => el.text === 'Others')?.value;
-                                // const otherOptionID = modesOfPayment.find(el => el.text === 'Others')?.value;
                                 const mode = modesOfPayment.find(el => el.text === 'Others');
 
                                 const otherOptionID = mode ? mode.value : -1
@@ -318,7 +316,7 @@ function SignUpOwner({gamePlatforms}: Props) {
                     >
                             <input type="text" />
                     </div>
-                    <div className="input--error">{selectedModesOfPayment.error}</div>
+                    <div className="input--error">{selectedModesOfPayment.error}</div> */}
                 </div>
 
                 <Button
