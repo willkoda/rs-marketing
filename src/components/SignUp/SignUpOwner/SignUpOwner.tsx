@@ -162,11 +162,12 @@ function SignUpOwner({gamePlatforms}: Props) {
     }, [])
 
     useEffect(() => {
-        setPlatform((oldPlatform) => ({
-            ...oldPlatform,
-            value: gamePlatforms.length > 0 ? gamePlatforms[0].value : '',
-            valid: gamePlatforms.length > 0
-        }))
+        console.log(gamePlatforms)
+        // setPlatform((oldPlatform) => ({
+        //     ...oldPlatform,
+        //     value: gamePlatforms.length > 0 ? gamePlatforms[0].value : '',
+        //     valid: gamePlatforms.length > 0
+        // }))
     }, [gamePlatforms])
 
     return (
