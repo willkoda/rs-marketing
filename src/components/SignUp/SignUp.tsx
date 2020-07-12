@@ -60,4 +60,10 @@ export interface Option {
     text: string;
 }
 
+export interface SelectedCheckboxes {
+    valid: boolean;
+    error: string;
+    value: Array<{id: string, other_data: string}>
+}
+
 export default SignUp;

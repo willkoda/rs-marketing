@@ -1,11 +1,15 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import Input, {ResultInterface} from '../../../elements/Input/Input';
 import Select from '../../../elements/Select/Select';
 import Button from '../../../elements/Button/Button';
 import MobileNumberInput from '../../../elements/MobileNumberInput/MobileNumberInput';
 import CheckBox from '../../../elements/CheckBox/CheckBox';
 import axios from '../../../auxiliary/axios';
+import {SelectedCheckboxes} from '../SignUp';
 
+import {useHistory} from 'react-router-dom';
+
+import {ModalContext} from '../../../providers/ModalProvider';
 import {Option} from '../SignUp';
 
 interface Props {
@@ -13,24 +17,22 @@ interface Props {
 }
 
 function SignUpPlayer({gamePlatforms}: Props) {
+    const history = useHistory();
+    const modal = useContext(ModalContext);
+
     const otherPlatformInput = useRef<HTMLDivElement>(null!);
     const otherStakesInput = useRef<HTMLDivElement>(null!);
     const [stakeOptions, setStakeOptions] = useState<Array<Option>>([]);
 
-    const initialState = {value: '', valid: true, error: ''};
+    const initialState = {value: '', valid: false, error: ''};
     const [firstName, setFirstName] = useState({...initialState});
     const [lastName, setLastName] = useState({...initialState});
     const [email, setEmail] = useState({...initialState});
     const [mobileNumber, setMobileNumber] = useState({...initialState});
     const [platform, setPlatform] = useState({...initialState, value: '1'});
+    const [selectedStakes, setSelectedStakes] = useState<SelectedCheckboxes>({value: [], valid: false, error:  ''});
 
     const [timeStamp, setTimeStamp] = useState(0);
-
-    // const stakes = [
-    //     {id: 'micro', text: 'Micro'},
-    //     {id: 'low', text: 'Low'},
-    //     {id: 'high', text: 'High'}
-    // ]
 
     const changeHandler = (result: ResultInterface) => {
         const newState = {...result};
@@ -67,40 +69,68 @@ function SignUpPlayer({gamePlatforms}: Props) {
         setMobileNumber({...mobileNumber, error: mobileNumber.valid ? '' : mobileNumber.error || 'Mobile Number is invalid'});
         setPlatform({...platform, error: platform.valid ? '' : platform.error || 'Platform is invalid'});
 
-        // const requestData = {
-        //     id: club.id,
-        //     name: name.value,
-        //     identifier: identifier.value,
-        //     url: url.value,
-        //     user_id: owner.value
-        // }
+        setSelectedStakes({
+            ...selectedStakes,
+            error: selectedStakes.value.length < 1 ? 'Please select at least 1 Stake' : '',
+        });
 
-        // const result = [
-        //     name,
-        //     identifier,
-        //     url,
-        //     owner
-        // ].map(e => e.valid);
+        const requestData = {
+            first_name: firstName.value,
+            last_name: lastName.value,
+            email: email.value,
+            mobile_number: mobileNumber.value,
+            game_platform_id: platform.value,
+            selected_stakes: JSON.stringify(selectedStakes.value)
+        }
 
-        // if (result.every(valid => valid)) {            
-        //     try {
-        //         await axios.patch(`/v1/organizations/${club.id}`, requestData);
+        console.log(requestData)
 
-        //         notice.setNoticeText('Successfully updated club information.');
-        //         notice.setNoticeState('success');
-        //         notice.setNoticeTimestamp(Date.now()); 
+        const result = [
+            firstName,
+            lastName,
+            email,
+            mobileNumber,
+            platform,
+            selectedStakes
+        ].map(e => e.valid);
 
-        //         successCalback();
-        //         getOwners();
-        //         modal.hideModal();
+        if (result.every(valid => valid)) {            
+            try {
+                await axios.post('/v1/marketing/create-player-registration', requestData);
+                modal.setModalData({
+                    header: 'Success.',
+                    content: <div className="padding-top-bottom-20 padding-left-right-20" style={{height: "100%"}}>
+                        <div>
+                            Thank you for reaching out to us.
+                            An account specialist will be contacting you shortly. Thanks! Have a great day.
+                        </div>
+                        <button
+                            onClick={() => {
+                                modal.hideModal();
+                                history.push('/');
+                            }}
+                            className="ripple margin-top-30"
+                            style={{
+                                backgroundColor: 'var(--accent-three-shade-one)',
+                                padding: '8px 10px',
+                                color: '#fff',
+                                width: '100px',
+                                boxShadow: '0 2px 4px 1px rgba(0, 0, 0, 0.2)',
+                                borderRadius: '4px',
+                                border: 'none',
+                                fontSize: '14px'
+                            }}
+                        >Ok</button>
+                    </div>,
+                    confirmationText: 'Ok'
+                })
+                modal.toggleModal();
                 
                 
-        //     } catch(error) {
-        //         if (/index_organizations_on_identifier/.test(error.response.data.error)) {
-        //             setIdentifier({...identifier, valid: false, error: 'Club ID is already taken'});
-        //         }
-        //     }
-        // }
+            } catch(error) {
+                console.log(error.response);
+            }
+        }
     }
 
     useEffect(() => {
@@ -205,13 +235,58 @@ function SignUpPlayer({gamePlatforms}: Props) {
                     {
                         stakeOptions.map((el, index) => (
                             <div key={index} className="checkbox">
-                                <CheckBox value={el.value} text={el.text} />
+                                <CheckBox
+                                    value={el.value}
+                                    text={el.text}
+                                    checkCallback={
+                                        ({checked, value}) => {
+                                            const othersOption = el.text === 'Others';
+                                            const input = otherStakesInput.current.querySelector('input') as HTMLInputElement;
+                                            const chosenStakes: Array<{id: string, other_data: string}> = [...selectedStakes.value];
+
+                                            if (othersOption) {
+                                                otherStakesInput.current.style.height = checked ? '35px' : '0px';
+                                                if (!checked) input.value = '';
+                                            }
+
+                                            if (checked) {
+                                                chosenStakes.push({id: value, other_data: ''});
+                                            } else {
+                                                const index = chosenStakes.findIndex((el) => el.id === value);
+                                                chosenStakes.splice(index, 1);
+                                            }
+                                            setSelectedStakes({...selectedStakes, value: chosenStakes, valid: chosenStakes.length > 0});
+                                        }
+                                    }
+                                />
                             </div>
                         ))
                     }
-                    <div className="others--input" ref={otherStakesInput}>
+                    <div
+                        className="others--input"
+                        ref={otherStakesInput}
+                        onChange={
+                            (event) => {
+                                const target = event.target as HTMLInputElement;
+                                const selected = [...selectedStakes.value];
+                                const mode = stakeOptions.find(el => el.text === 'Others');
+
+                                const otherOptionID = mode ? mode.value : -1
+
+                                const index = selected.findIndex(el => el.id === otherOptionID);
+
+                                if (index !== -1) {
+                                    selected.splice(index, 1, {
+                                        ...selected[index],
+                                        other_data: target.value
+                                    })
+                                    setSelectedStakes((oldValue) => ({...oldValue, value: selected}))
+                                }
+                            }
+                        }>
                         <input type="text" placeholder="Other stakes"/>
                     </div>
+                    <div className="input--error">{selectedStakes.error}</div>
                 </div>
 
                 <Button

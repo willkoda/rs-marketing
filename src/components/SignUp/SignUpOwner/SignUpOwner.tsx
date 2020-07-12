@@ -4,18 +4,13 @@ import Select from '../../../elements/Select/Select';
 import Button from '../../../elements/Button/Button';
 import MobileNumberInput from '../../../elements/MobileNumberInput/MobileNumberInput';
 import CheckBox from '../../../elements/CheckBox/CheckBox';
+import {SelectedCheckboxes} from '../SignUp';
 
 import {useHistory} from 'react-router-dom';
 import {Option} from '../SignUp';
 
 import {ModalContext} from '../../../providers/ModalProvider';
 import axios from '../../../auxiliary/axios';
-
-interface SelectedPaymentMode {
-    valid: boolean;
-    error: string;
-    value: Array<{id: string, other_data: string}>
-}
 
 interface Props {
     gamePlatforms: Array<Option>
@@ -36,7 +31,7 @@ function SignUpOwner({gamePlatforms}: Props) {
     const [platform, setPlatform] = useState({...initialState, value: '1', valid: true});
     const [clubName, setClubName] = useState({...initialState});
     const [clubID, setClubID] = useState({...initialState});
-    const [selectedModesOfPayment, setSelectedModesOfPayment] = useState<SelectedPaymentMode>({value: [], valid: false, error:  ''});
+    const [selectedModesOfPayment, setSelectedModesOfPayment] = useState<SelectedCheckboxes>({value: [], valid: false, error:  ''});
 
     const [timeStamp, setTimeStamp] = useState(0);
 
