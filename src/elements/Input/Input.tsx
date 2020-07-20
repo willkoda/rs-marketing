@@ -97,8 +97,7 @@ function Input(props: Props) {
     }, [props.inputBorderColor])
 
     const blur = () => {
-        if (!props.value) return;
-        if (props.value.length > 0) return;
+        if (inputRef.current.value.length > 0) return;
         placeholderRef.current.style.transform = 'translateY(-50%) scale(1)';
         placeholderRef.current.style.color = 'var(--light-grey)';
     }
