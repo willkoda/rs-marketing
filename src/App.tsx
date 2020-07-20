@@ -24,7 +24,7 @@ function App() {
         window.Tawk_API = window.Tawk_API || {};
         window.Tawk_LoadStart = new Date();
     
-        const scriptSource = process.env.REACT_TAWK_URL || 'https://embed.tawk.to/5f05c9f567771f3813c0a57a/default';
+        const scriptSource = process.env.REACT_TAWK_URL || 'https://embed.tawk.to/5f137baa7258dc118bee8162/default';
         const s1 = document.querySelector(`script[src='${scriptSource}']`) || document.createElement("script") as any;
         const s0 = document.getElementsByTagName("script")[0] as any;
     
