@@ -18,6 +18,7 @@ function Main() {
     const activeSectionRef = useRef(null!);
     const countries = [
         'Australia',
+        'Philippines',
         'Canada',
         'New Zealand',
         'UK',
@@ -151,7 +152,7 @@ function Main() {
                 <div
                     className="online--poker--section padding-top-bottom-100">
                     <div className="constrained--container">
-                        <div className="sub--heading">Online Poker</div>
+                        <div className="sub--heading">Play Online Poker</div>
                         <div className="description margin-top-30">
                             Join the world’s most popular online Poker games with more tables and more Poker tournaments anywhere online!
                         </div>
