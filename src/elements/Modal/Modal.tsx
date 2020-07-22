@@ -4,7 +4,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '../../elements/IconButton/IconButton';
 
 interface Props {
-    context: React.Context<ModalContextInterface>
+    context: React.Context<ModalContextInterface>;
 }
 
 function Modal(props: Props) {
@@ -27,7 +27,7 @@ function Modal(props: Props) {
 
     useEffect(() => {
         if (context.modalVisible) {
-            windowRef.current.style.top = '45%';
+            windowRef.current.style.top = '50%';
             windowRef.current.style.opacity = '1';
         } else {
             windowRef.current.style.top = '43%';

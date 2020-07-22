@@ -1,0 +1,76 @@
+div.modal--content {
+    div.background {
+        height: 150px;
+        background-color: var(--accent-three-shade-one);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: -1;
+    }
+
+    div.options--container {
+        box-shadow: var(--shadow-type-one);
+        background-color: #fff;
+        margin-top: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        border-radius: 4px;
+
+        div.option {
+            flex: 0 1 49%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            @media (max-width: 600px) {
+                flex: 0 1 100%;
+            }
+
+            div.hexagon {
+                height: 200px;
+                z-index: 1;
+                position: relative;
+
+                svg {
+                    polyline {
+                        fill: var(--accent-one-shade-one);
+                        opacity: 0.1;
+                    }
+                }
+            }
+
+            img {
+                width: 100px;
+                height: 100px;
+                z-index: 2;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -55%);
+            }
+
+            button {
+                margin-top: 15px;
+                padding: 8px 12px;
+                width: 180px;
+                border-radius: 4px;
+                background-color: var(--accent-three-shade-two);
+                opacity: 0.7;
+                color: #fff;
+                outline: none;
+                font-size: 15px;
+                border: 2px solid transparent;
+                transition: border-color 200ms ease-in-out, background-color 200ms ease-in-out, color 200ms ease-in-out;
+                &:hover {
+                    border-color: var(--accent-three-shade-two);
+                    background-color: transparent;
+                    color: var(--accent-three-shade-two);
+                }
+                @media (max-width: 600px) {
+                    margin-top: 10px;
+                }
+            }
+        }
+    }
+}

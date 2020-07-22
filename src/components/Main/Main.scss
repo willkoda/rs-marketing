@@ -22,7 +22,8 @@ section.main {
                 span {
                     display: block;
                 }
-                a.get--started--link {
+                button.get--started--button {
+                    background-color: transparent;
                     border: 1px solid #fff;
                     color: #fff;
                     padding: 10px 25px;

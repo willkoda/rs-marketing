@@ -2,9 +2,13 @@ import React, {useEffect, useContext, useRef} from 'react';
 import './Main.scss';
 import './Services.scss';
 import {Link} from 'react-router-dom';
+
 import mainImage from '../../assets/images/main.jpg';
 
-import {HeaderContext} from '../../providers/HeaderProvider'
+import {HeaderContext} from '../../providers/HeaderProvider';
+import {ModalContext} from '../../providers/ModalProvider';
+
+import OptionsModalContent from './OptionsModalContent/OptionsModalContent';
 
 import {
     Airplay as AirplayIcon,
@@ -14,6 +18,7 @@ import {
 } from '@material-ui/icons';
 
 function Main() {
+    const modal = useContext(ModalContext);
     const headerContext = useContext(HeaderContext);
     const activeSectionRef = useRef(null!);
     const countries = [
@@ -122,7 +127,18 @@ function Main() {
                             <h2 className="sub--heading margin-top-20">
                                 <span>We look after your day to day operations</span>
                                 <span className="margin-top-10">so you can focus on growing your business.</span>
-                                <Link to="/sign-up" className="get--started--link margin-top-20">Get Started</Link>
+                                <button 
+                                    className="get--started--button margin-top-10"
+                                    onClick={() => {
+                                        modal.setModalData({
+                                            header: 'Please select an option',
+                                            content: <OptionsModalContent />,
+                                            confirmationText: 'Ok'
+                                        })
+                                        modal.toggleModal();
+                                    }}
+                                >
+                                Get Started</button>
                             </h2>
                         </div>
                     </div>
@@ -173,7 +189,18 @@ function Main() {
                     ref={headerContext.activeMainPageSection === 'contact-us' ? activeSectionRef : null}>
                         <p className="heading">Interested?</p>
                         <div className="sub--heading">Contact Us</div>
-                        <Link to="/sign-up" className="registration--link margin-top-40 margin-bottom-80">Sign up for our service today.</Link>
+                        <button 
+                            className="sign--up--button margin-top-10"
+                            onClick={() => {
+                                modal.setModalData({
+                                    header: 'Please select an option',
+                                    content: <OptionsModalContent />,
+                                    confirmationText: 'Ok'
+                                })
+                                modal.toggleModal();
+                            }}
+                        >
+                        Sign up for our service today.</button>
                 </div>
             </section>
         </div>

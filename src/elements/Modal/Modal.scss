@@ -9,7 +9,7 @@ div.Modal {
     div.modal--window {
         box-shadow: var(--shadow-type-one);
         width: 90%;
-        max-width: 400px;
+        max-width: 600px;
         background-color: #fff;
         position: absolute;
         top: 43%;
@@ -18,10 +18,12 @@ div.Modal {
         border-radius: 2px;
         transition: top 200ms ease-in-out, opacity 320ms ease-in-out;
         opacity: 0;
+        max-height: 90%;
+        overflow: auto;
 
         div.modal--header {
             border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-            padding: 20px 15px;
+            padding: 20px 40px;
             position: relative;
             height: 79px;
             display: flex;
@@ -33,6 +35,10 @@ div.Modal {
                 padding: 10px;
                 position: relative;
                 right: -15px;
+            }
+
+            @media (max-width: 600px) {
+                padding: 20px 15px;
             }
         }
 

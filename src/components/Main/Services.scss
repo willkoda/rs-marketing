@@ -121,11 +121,15 @@ section.Services {
     }
 
     div.contact--section {
-        a.registration--link {
+        button.sign--up--button {
             color: var(--accent-one-shade-two);
             font-size: 18px;
             text-decoration: underline;
             display: block;
+            margin: 0 auto;
+            background-color: transparent;
+            outline: none;
+            border: none;
         }
     }
 }
