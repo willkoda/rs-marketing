@@ -17,12 +17,17 @@ function ModalProvider(props: Props) {
         setModalVisible(false);
     }
 
+    function showModal() {
+        setModalVisible(true);
+    }
+
     const state = {
         modalVisible: modalVisible,
         toggleModal: toggleModal,
         modalData: modalData,
         setModalData: setModalData,
-        hideModal: hideModal
+        hideModal: hideModal,
+        showModal: showModal
     }
 
     return (

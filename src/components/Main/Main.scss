@@ -33,11 +33,32 @@ section.main {
                     font-weight: 400;
                     font-size: 16px;
                     transition: background-color 280ms ease-in-out, color 280ms ease-in-out;
+                    width: 160px;
                     &:hover {
                         background-color: #fff;
                         color: var(--dark-text);
                     }
                 }
+
+                button.export--button {
+                    background-color: var(--complement-shade-three);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.2);
+                    outline: none;
+                    border: none;
+                    padding: 10px 15px;
+                    width: 160px;
+                    border-radius: 3px;
+                    svg, span {
+                        color: #fff;
+                    }
+                    span {
+                        font-size: 15px;
+                    }
+                }
+
                 @media (max-width: 600px) {
                     font-size: 15px;
                 }

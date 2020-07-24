@@ -1,7 +1,8 @@
-import React, {useEffect, useContext, useRef} from 'react';
+import React, {useEffect, useContext, useRef, useState} from 'react';
 import './Main.scss';
 import './Services.scss';
 import {Link} from 'react-router-dom';
+import AdminMarketingExport from './AdminMarketingExport';
 
 import mainImage from '../../assets/images/main.jpg';
 
@@ -10,17 +11,26 @@ import {ModalContext} from '../../providers/ModalProvider';
 
 import OptionsModalContent from './OptionsModalContent/OptionsModalContent';
 
+import withTokenValidation from '../../hoc/withTokenValidation';
+import {compose} from 'redux';
+
 import {
     Airplay as AirplayIcon,
     Group as GroupIcon,
     Assessment as AssessmentIcon,
-    Storage as StorageIcon
+    Storage as StorageIcon,
+    ImportExport as ImportExportIcon
 } from '@material-ui/icons';
 
-function Main() {
+interface Props {
+    validateToken(): Promise<boolean>;
+}
+
+function Main({validateToken}: Props) {
     const modal = useContext(ModalContext);
     const headerContext = useContext(HeaderContext);
     const activeSectionRef = useRef(null!);
+    const [tokenValid, setTokenValid] = useState(false);
     const countries = [
         'Australia',
         'Philippines',
@@ -34,12 +44,22 @@ function Main() {
         'Thailand'
     ];
 
+
     useEffect(() => {
         const activeElement = activeSectionRef.current as HTMLElement;
         if (activeElement) {
             activeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
         }
     }, [headerContext.activeMainPageSection, activeSectionRef, headerContext.clickTimeStamp])
+
+    useEffect(() => {
+        // console.log(validateToken);
+        const tokenValidation = async () => {
+            const result = await validateToken();
+            setTokenValid(result);
+        }
+        tokenValidation();
+    }, [validateToken])
 
     const serviceItems = [
         {
@@ -139,6 +159,22 @@ function Main() {
                                     }}
                                 >
                                 Get Started</button>
+                                {
+                                    tokenValid ? <button className="export--button margin-top-15 ripple" onClick={
+                                        () => {
+                                                modal.setModalData({
+                                                    header: 'Export data as CSV',
+                                                    content: <AdminMarketingExport />
+                                                })
+                                                modal.toggleModal();
+                                            }
+                                    }>
+                                        <ImportExportIcon />
+                                        <span className="text">Export Records</span>
+                                    </button>
+                                    :
+                                    null
+                                }
                             </h2>
                         </div>
                     </div>
@@ -207,4 +243,4 @@ function Main() {
     )
 }
 
-export default Main;
+export default compose(withTokenValidation)(Main);

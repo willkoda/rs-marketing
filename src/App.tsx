@@ -7,6 +7,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Main from './components/Main/Main';
 import SignUp from './components/SignUp/SignUp';
+import LogIn from './components/LogIn/LogIn';
 import Modal from './elements/Modal/Modal';
 
 import HeaderProvider from './providers/HeaderProvider';
@@ -60,6 +61,7 @@ function App() {
                     <Switch>
                         <Route exact path="/" component={Main} />
                         <Route path="/sign-up"component={SignUp} />
+                        <Route path="/login" component={LogIn} />
                     </Switch>
                     <Footer />
                 </ModalProvider>

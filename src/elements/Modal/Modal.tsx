@@ -86,6 +86,7 @@ export interface ModalContextInterface {
     modalData: ModalDataInterface;
     setModalData(params: ModalDataInterface): void;
     hideModal(): void;
+    showModal(): void;
 }
 
 export default Modal;
