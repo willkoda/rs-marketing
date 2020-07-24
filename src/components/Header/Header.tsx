@@ -20,7 +20,8 @@ function Header() {
     const menuOptions = [
         <button onClick={() => headerMenuClick('home')}>Home</button>,
         <button onClick={() => headerMenuClick('services')}>Services</button>,
-        <button onClick={() => headerMenuClick('contact-us')}>Contact Us</button>
+        <button onClick={() => headerMenuClick('contact-us')}>Contact Us</button>,
+        <button onClick={() => history.push('/login')}>Log In</button>
     ];
 
     return (
