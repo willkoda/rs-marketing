@@ -53,7 +53,6 @@ function Main({validateToken}: Props) {
     }, [headerContext.activeMainPageSection, activeSectionRef, headerContext.clickTimeStamp])
 
     useEffect(() => {
-        // console.log(validateToken);
         const tokenValidation = async () => {
             const result = await validateToken();
             setTokenValid(result);
