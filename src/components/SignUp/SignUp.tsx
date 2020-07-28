@@ -60,7 +60,7 @@ export interface Option {
     text: string;
 }
 
-export interface SelectedCheckboxes {
+export interface MultipleChoices {
     valid: boolean;
     error: string;
     value: Array<{id: string, other_data: string}>

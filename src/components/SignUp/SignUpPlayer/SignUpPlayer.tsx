@@ -5,7 +5,7 @@ import Button from '../../../elements/Button/Button';
 import MobileNumberInput from '../../../elements/MobileNumberInput/MobileNumberInput';
 import CheckBox from '../../../elements/CheckBox/CheckBox';
 import axios from '../../../auxiliary/axios';
-import {SelectedCheckboxes} from '../SignUp';
+import {MultipleChoices} from '../SignUp';
 
 import {useHistory} from 'react-router-dom';
 
@@ -29,8 +29,8 @@ function SignUpPlayer({gamePlatforms}: Props) {
     const [lastName, setLastName] = useState({...initialState});
     const [email, setEmail] = useState({...initialState});
     const [mobileNumber, setMobileNumber] = useState({...initialState});
-    const [platform, setPlatform] = useState({...initialState, value: '1'});
-    const [selectedStakes, setSelectedStakes] = useState<SelectedCheckboxes>({value: [], valid: false, error:  ''});
+    const [platform, setPlatform] = useState<MultipleChoices>({value: [{id: '1', other_data: ''}], valid: true, error: ''});
+    const [selectedStakes, setSelectedStakes] = useState<MultipleChoices>({value: [], valid: false, error:  ''});
 
     const [timeStamp, setTimeStamp] = useState(0);
 
@@ -50,9 +50,6 @@ function SignUpPlayer({gamePlatforms}: Props) {
                 break;
             case 'mobileNumber':
                     setMobileNumber(newState);
-                break;
-            case 'platform':
-                    setPlatform(newState);
                 break;
             default:
                 throw new Error(`${result.origin} is not a valid origin`);
@@ -79,11 +76,12 @@ function SignUpPlayer({gamePlatforms}: Props) {
             last_name: lastName.value,
             email: email.value,
             mobile_number: mobileNumber.value,
-            game_platform_id: platform.value,
+            selected_game_platform: {
+                game_platform_id: platform.value[0].id,
+                other_data: platform.value[0].other_data
+            },
             selected_stakes: JSON.stringify(selectedStakes.value)
         }
-
-        console.log(requestData)
 
         const result = [
             firstName,
@@ -136,7 +134,8 @@ function SignUpPlayer({gamePlatforms}: Props) {
     useEffect(() => {
         setPlatform((oldPlatform) => ({
             ...oldPlatform,
-            value: gamePlatforms.length > 0 ? gamePlatforms[0].value : '',
+            // value: gamePlatforms.length > 0 ? gamePlatforms[0].value : '',
+            value: gamePlatforms.length > 0 ? [{id: gamePlatforms[0].value, other_data: ''}] : [],
             valid: gamePlatforms.length > 0
         }))
     }, [gamePlatforms])
@@ -215,7 +214,8 @@ function SignUpPlayer({gamePlatforms}: Props) {
                     options={gamePlatforms}
                     select={
                         (result) => {
-                            setPlatform({value: result.value, valid: result.valid, error: ''});
+                            // setPlatform({value: result.value, valid: result.valid, error: ''});
+                            setPlatform({value: [{id: result.value, other_data: ''}], valid: result.valid, error: ''});
                             otherPlatformInput.current.style.height = result.value === '4' ? '35px' : '0px';
                             const input = otherPlatformInput.current.querySelector('input') as HTMLInputElement;
                             if (result.value !== '4') input.value = '';
@@ -227,7 +227,18 @@ function SignUpPlayer({gamePlatforms}: Props) {
                 />
 
                 <div className="others--input" ref={otherPlatformInput}>
-                    <input type="text" placeholder="Enter platform"/>
+                    <input
+                        type="text"
+                        placeholder="Enter platform"
+                        onChange={
+                            (event) => {
+                                const target = event.target as HTMLInputElement;
+                                if (platform.value[0].id === '4') {
+                                    setPlatform({...platform, value: [{id: '4', other_data: target.value}]});
+                                }
+                            }
+                        }
+                    />
                 </div>
 
                 <p className="text-align-left">Stakes:</p>

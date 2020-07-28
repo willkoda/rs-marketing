@@ -4,7 +4,7 @@ import Select from '../../../elements/Select/Select';
 import Button from '../../../elements/Button/Button';
 import MobileNumberInput from '../../../elements/MobileNumberInput/MobileNumberInput';
 import CheckBox from '../../../elements/CheckBox/CheckBox';
-import {SelectedCheckboxes} from '../SignUp';
+import {MultipleChoices} from '../SignUp';
 
 import {useHistory} from 'react-router-dom';
 import {Option} from '../SignUp';
@@ -21,6 +21,7 @@ function SignUpOwner({gamePlatforms}: Props) {
     const modal = useContext(ModalContext);
     const [modesOfPayment, setModesOfPayment] = useState<Array<Option>>([]);
 
+    const otherPlatformInput = useRef<HTMLDivElement>(null!);
     const othersInput = useRef<HTMLDivElement>(null!);
 
     const initialState = {value: '', valid: false, error: ''};
@@ -28,10 +29,11 @@ function SignUpOwner({gamePlatforms}: Props) {
     const [lastName, setLastName] = useState({...initialState});
     const [email, setEmail] = useState({...initialState});
     const [mobileNumber, setMobileNumber] = useState({...initialState});
-    const [platform, setPlatform] = useState({...initialState, value: '1', valid: true});
+    // const [platform, setPlatform] = useState({...initialState, value: '1', valid: true});
+    const [platform, setPlatform] = useState<MultipleChoices>({value: [{id: '1', other_data: ''}], valid: true, error: ''});
     const [clubName, setClubName] = useState({...initialState});
     const [clubID, setClubID] = useState({...initialState});
-    const [selectedModesOfPayment, setSelectedModesOfPayment] = useState<SelectedCheckboxes>({value: [], valid: false, error:  ''});
+    const [selectedModesOfPayment, setSelectedModesOfPayment] = useState<MultipleChoices>({value: [], valid: false, error:  ''});
 
     const [timeStamp, setTimeStamp] = useState(0);
 
@@ -51,9 +53,6 @@ function SignUpOwner({gamePlatforms}: Props) {
                 break;
             case 'mobileNumber':
                     setMobileNumber(newState);
-                break;
-            case 'platform':
-                    setPlatform(newState);
                 break;
             case 'clubName':
                     setClubName(newState);
@@ -91,7 +90,10 @@ function SignUpOwner({gamePlatforms}: Props) {
             last_name: lastName.value,
             email: email.value,
             mobile_number: mobileNumber.value,
-            game_platform_id: platform.value,
+            selected_game_platform: {
+                game_platform_id: platform.value[0].id,
+                other_data: platform.value[0].other_data
+            },
             selected_modes_of_payment: JSON.stringify(selectedModesOfPayment.value)
         }
 
@@ -161,7 +163,7 @@ function SignUpOwner({gamePlatforms}: Props) {
     useEffect(() => {
         setPlatform((oldPlatform) => ({
             ...oldPlatform,
-            value: gamePlatforms.length > 0 ? gamePlatforms[0].value : '',
+            value: gamePlatforms.length > 0 ? [{id: gamePlatforms[0].value, other_data: ''}] : [],
             valid: gamePlatforms.length > 0
         }))
     }, [gamePlatforms])
@@ -224,12 +226,32 @@ function SignUpOwner({gamePlatforms}: Props) {
                     error={platform.error}
                     options={gamePlatforms}
                     select={
-                        (result) => setPlatform({value: result.value, valid: result.valid, error: ''})
+                        (result) => {
+                            setPlatform({value: [{id: result.value, other_data: ''}], valid: result.valid, error: ''});
+                            otherPlatformInput.current.style.height = result.value === '4' ? '35px' : '0px';
+                            const input = otherPlatformInput.current.querySelector('input') as HTMLInputElement;
+                            if (result.value !== '4') input.value = '';
+                        }
                     }
                     selectColor="var(--medium-grey)"
                     selectText="Select a Platform"
                     initialValue={gamePlatforms[0] ? gamePlatforms[0].text : ''}
                 />
+
+                <div className="others--input" ref={otherPlatformInput}>
+                    <input
+                        type="text"
+                        placeholder="Enter platform"
+                        onChange={
+                            (event) => {
+                                const target = event.target as HTMLInputElement;
+                                if (platform.value[0].id === '4') {
+                                    setPlatform({...platform, value: [{id: '4', other_data: target.value}]});
+                                }
+                            }
+                        }
+                    />
+                </div>
 
                 <Input 
                     id="clubName" 
