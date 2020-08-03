@@ -29,7 +29,6 @@ function SignUpOwner({gamePlatforms}: Props) {
     const [lastName, setLastName] = useState({...initialState});
     const [email, setEmail] = useState({...initialState});
     const [mobileNumber, setMobileNumber] = useState({...initialState});
-    // const [platform, setPlatform] = useState({...initialState, value: '1', valid: true});
     const [platform, setPlatform] = useState<MultipleChoices>({value: [{id: '1', other_data: ''}], valid: true, error: ''});
     const [clubName, setClubName] = useState({...initialState});
     const [clubID, setClubID] = useState({...initialState});
@@ -260,7 +259,7 @@ function SignUpOwner({gamePlatforms}: Props) {
                     placeholder="Club Name" 
                     value={clubName.value} 
                     changeCallback={changeHandler}
-                    validatedProps={{minLength: 3, english: true}}
+                    validatedProps={{minLength: 3, noSpaces: true}}
                     valid={clubName.valid} 
                     error={clubName.error}
                     timeStamp={timeStamp}

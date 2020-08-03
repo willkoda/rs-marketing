@@ -44,6 +44,22 @@ header.Header {
                         color: var(--base);
                     }
                 }
+
+                button.staf--log-in {
+                    position: relative;
+                    width: 60px;
+                    height: 25px;
+                    span.text {
+                        position: absolute;
+                        bottom: -10px;
+                        left: 50%;
+                        font-size: 7px;
+                        transform: translateX(-50%);
+                        width: 60px;
+                        display: block;
+                        color: var(--accent-one-shade-two);
+                    }
+                }
             }
         }
 

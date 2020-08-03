@@ -28,6 +28,7 @@ function SignUpPlayer({gamePlatforms}: Props) {
     const [firstName, setFirstName] = useState({...initialState});
     const [lastName, setLastName] = useState({...initialState});
     const [email, setEmail] = useState({...initialState});
+    const [username, setUsername] = useState({...initialState});
     const [mobileNumber, setMobileNumber] = useState({...initialState});
     const [platform, setPlatform] = useState<MultipleChoices>({value: [{id: '1', other_data: ''}], valid: true, error: ''});
     const [selectedStakes, setSelectedStakes] = useState<MultipleChoices>({value: [], valid: false, error:  ''});
@@ -48,6 +49,9 @@ function SignUpPlayer({gamePlatforms}: Props) {
             case 'email':
                     setEmail(newState);
                 break;
+            case 'username':
+                    setUsername(newState);
+                break;
             case 'mobileNumber':
                     setMobileNumber(newState);
                 break;
@@ -63,6 +67,7 @@ function SignUpPlayer({gamePlatforms}: Props) {
         setFirstName({...firstName, error: firstName.valid ? '' : firstName.error || 'First name is invalid'});
         setLastName({...lastName, error: lastName.valid ? '' : lastName.error || 'Last name is invalid'});
         setEmail({...email, error: email.valid ? '' : email.error || 'Email is invalid'});
+        setUsername({...username, error: username.valid ? '' : username.error || 'Username is invalid'});
         setMobileNumber({...mobileNumber, error: mobileNumber.valid ? '' : mobileNumber.error || 'Mobile Number is invalid'});
         setPlatform({...platform, error: platform.valid ? '' : platform.error || 'Platform is invalid'});
 
@@ -72,6 +77,9 @@ function SignUpPlayer({gamePlatforms}: Props) {
         });
 
         const requestData = {
+            player_params: {
+                username: username.value
+            },
             first_name: firstName.value,
             last_name: lastName.value,
             email: email.value,
@@ -87,6 +95,7 @@ function SignUpPlayer({gamePlatforms}: Props) {
             firstName,
             lastName,
             email,
+            username,
             mobileNumber,
             platform,
             selectedStakes
@@ -134,7 +143,6 @@ function SignUpPlayer({gamePlatforms}: Props) {
     useEffect(() => {
         setPlatform((oldPlatform) => ({
             ...oldPlatform,
-            // value: gamePlatforms.length > 0 ? gamePlatforms[0].value : '',
             value: gamePlatforms.length > 0 ? [{id: gamePlatforms[0].value, other_data: ''}] : [],
             valid: gamePlatforms.length > 0
         }))
@@ -197,6 +205,19 @@ function SignUpPlayer({gamePlatforms}: Props) {
                     timeStamp={timeStamp}
                 />
 
+                <Input 
+                    id="username" 
+                    margin="margin-top-20"
+                    inputBorderColor="var(--accent-one-shade-two)"
+                    placeholder="Username" 
+                    value={username.value} 
+                    changeCallback={changeHandler}
+                    validatedProps={{noSpaces: true, minLength: 3}}
+                    valid={username.valid} 
+                    error={username.error}
+                    timeStamp={timeStamp}
+                />
+
                 <MobileNumberInput 
                     change={changeHandler}
                     error={mobileNumber.error}
@@ -214,7 +235,6 @@ function SignUpPlayer({gamePlatforms}: Props) {
                     options={gamePlatforms}
                     select={
                         (result) => {
-                            // setPlatform({value: result.value, valid: result.valid, error: ''});
                             setPlatform({value: [{id: result.value, other_data: ''}], valid: result.valid, error: ''});
                             otherPlatformInput.current.style.height = result.value === '4' ? '35px' : '0px';
                             const input = otherPlatformInput.current.querySelector('input') as HTMLInputElement;

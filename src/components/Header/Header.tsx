@@ -2,8 +2,9 @@ import React, {useContext} from 'react';
 import './Header.scss';
 import Menu from '../../elements/Menu/Menu';
 import {HeaderContext, ActiveLink} from '../../providers/HeaderProvider';
-
 import {useLocation, useHistory} from 'react-router-dom';
+
+import headset from '../../assets/images/headset.svg';
 
 function Header() {
     const location = useLocation();
@@ -21,7 +22,12 @@ function Header() {
         <button onClick={() => headerMenuClick('home')}>Home</button>,
         <button onClick={() => headerMenuClick('services')}>Services</button>,
         <button onClick={() => headerMenuClick('contact-us')}>Contact Us</button>,
-        <button onClick={() => history.push('/login')}>Log In</button>
+        <button className="staf--log-in" onClick={() => history.push('/login')}>
+            <img src={headset} alt="headset" width="25px" height="25px" />
+            <span className="text" style={{
+                
+            }}>Staff Portal</span>
+        </button>
     ];
 
     return (

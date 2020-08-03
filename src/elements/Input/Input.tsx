@@ -17,6 +17,7 @@ interface Props {
         minLength?: number;
         english?: boolean;
         numbersOnly?: boolean;
+        noSpaces?: boolean;
     };
     valid: boolean;
     value: string;
@@ -48,6 +49,10 @@ function Input(props: Props) {
             numbersOnly: {
                 valid: true,
                 errorMessage: 'Please enter only numbers.'
+            },
+            noSpaces: {
+                valid: true,
+                errorMessage: 'Please do not enter spaces.'
             }
         };
         const predicate: indexSignature = {
@@ -65,6 +70,10 @@ function Input(props: Props) {
             numbersOnly: () => {
                 const regex = /^\d+$/;
                 return result['numbersOnly'] = regex.test(event.target.value);
+            },
+            noSpaces: () => {
+                const regex = /^\S*$/;
+                return result['noSpaces'] = regex.test(event.target.value);
             }
         }
 

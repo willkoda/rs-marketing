@@ -102,6 +102,15 @@ div.Menu {
                     transition: background-color 260ms ease-in-out;
                 }
             }
+
+            button.staf--log-in {
+                display: flex;
+                align-items: center;
+                span.text {
+                    margin-left: 10px;
+                    color: var(--accent-one-shade-two);
+                }
+            }
             
             svg {
                 font-size: 20px;
