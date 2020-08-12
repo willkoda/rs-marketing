@@ -14,6 +14,7 @@ interface Props {
     type?: string;
     validatedProps?: {
         email?: boolean;
+        maxLength?: number;
         minLength?: number;
         english?: boolean;
         numbersOnly?: boolean;
@@ -38,6 +39,10 @@ function Input(props: Props) {
                 valid: true,
                 errorMessage: "The email is invalid."
             },
+            maxLength: {
+                valid: true,
+                errorMessage: `${props.placeholder?.toLowerCase()} is too long. Enter at most ${props.validatedProps.maxLength} characters`
+            },
             minLength: {
                 valid: true,
                 errorMessage: `${props.placeholder.toLowerCase()} is too short. Enter at least ${props.validatedProps.minLength} characters`
@@ -59,6 +64,9 @@ function Input(props: Props) {
             email: () => {
                 const regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
                 return result['email'] = regex.test(event.target.value);
+            },
+            maxLength: () => {
+                return event.target.value.length <= props.validatedProps?.maxLength!;
             },
             minLength: () => {
                 return event.target.value.length >= props.validatedProps?.minLength!;
