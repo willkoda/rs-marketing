@@ -259,7 +259,7 @@ function SignUpOwner({gamePlatforms}: Props) {
                     placeholder="Club Name" 
                     value={clubName.value} 
                     changeCallback={changeHandler}
-                    validatedProps={{minLength: 3, noSpaces: true}}
+                    validatedProps={{minLength: 3}}
                     valid={clubName.valid} 
                     error={clubName.error}
                     timeStamp={timeStamp}
