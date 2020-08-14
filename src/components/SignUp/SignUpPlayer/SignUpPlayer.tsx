@@ -320,6 +320,10 @@ function SignUpPlayer({gamePlatforms}: Props) {
                     <div className="input--error">{selectedStakes.error}</div>
                 </div>
 
+                <p className="changes--notice">
+                    For future changes, you may contact the AdminDesk team via the 24/7 chat link.
+                </p>
+
                 <Button
                     width="250px"
                     text="Submit"

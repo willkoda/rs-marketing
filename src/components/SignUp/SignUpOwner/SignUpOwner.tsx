@@ -337,6 +337,10 @@ function SignUpOwner({gamePlatforms}: Props) {
                     <div className="input--error">{selectedModesOfPayment.error}</div>
                 </div>
 
+                <p className="changes--notice">
+                    For future changes, you may contact the AdminDesk team via the 24/7 chat link.
+                </p>
+
                 <Button
                     width="250px"
                     text="Submit"
