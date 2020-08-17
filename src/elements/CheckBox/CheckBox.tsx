@@ -15,8 +15,8 @@ function CheckBox({value, text, checkCallback}: Props) {
     }
 
     return (
-        <label htmlFor={value} className="CheckBox">
-            <input type="checkbox" id={value} onChange={changeHandler} />
+        <label htmlFor={`${text}--${value}`} className="CheckBox">
+            <input type="checkbox" id={`${text}--${value}`} onChange={changeHandler} />
             <span className="svg--container margin-right-10">
                 <svg viewBox="0, 0, 50, 50">
                     <path d="M5 30 L 20 45 L 45 5"></path>

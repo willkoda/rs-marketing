@@ -16,10 +16,22 @@ interface Props {
     gamePlatforms: Array<Option>
 }
 
+interface ClubOwnerServices {
+    name: string;
+    services: Array<{id: number; name: string;}>
+}
+
+interface ChosenClubOwnerServices {
+    valid: boolean;
+    error: string;
+    value: Array<{id: string}>
+}
+
 function SignUpOwner({gamePlatforms}: Props) {
     const history = useHistory();
     const modal = useContext(ModalContext);
     const [modesOfPayment, setModesOfPayment] = useState<Array<Option>>([]);
+    const [clubOwnerServices, setClubOwnerServices] = useState<Array<ClubOwnerServices>>([]);
 
     const otherPlatformInput = useRef<HTMLDivElement>(null!);
     const othersInput = useRef<HTMLDivElement>(null!);
@@ -33,6 +45,7 @@ function SignUpOwner({gamePlatforms}: Props) {
     const [clubName, setClubName] = useState({...initialState});
     const [clubID, setClubID] = useState({...initialState});
     const [selectedModesOfPayment, setSelectedModesOfPayment] = useState<MultipleChoices>({value: [], valid: false, error:  ''});
+    const [selectedClubOwnerServices, setSelectedClubOwnerServices] = useState<ChosenClubOwnerServices>({value: [], valid: false, error: ''});
 
     const [timeStamp, setTimeStamp] = useState(0);
 
@@ -79,6 +92,10 @@ function SignUpOwner({gamePlatforms}: Props) {
             ...selectedModesOfPayment,
             error: selectedModesOfPayment.value.length < 1 ? 'Please select at least 1 mode of payment' : '',
         });
+        setSelectedClubOwnerServices({
+            ...selectedClubOwnerServices,
+            error: selectedClubOwnerServices.value.length < 1 ? 'Please select at least 1 service' : ''
+        });
 
         const requestData = {
             club_owner_params: {
@@ -93,7 +110,8 @@ function SignUpOwner({gamePlatforms}: Props) {
                 game_platform_id: platform.value[0].id,
                 other_data: platform.value[0].other_data
             },
-            selected_modes_of_payment: JSON.stringify(selectedModesOfPayment.value)
+            selected_modes_of_payment: JSON.stringify(selectedModesOfPayment.value),
+            selected_club_owner_services: JSON.stringify(selectedClubOwnerServices.value)
         }
 
         const result = [
@@ -104,10 +122,11 @@ function SignUpOwner({gamePlatforms}: Props) {
             platform,
             clubName,
             clubID,
+            selectedClubOwnerServices,
             selectedModesOfPayment
         ].map(e => e.valid);
     
-        if (result.every(valid => valid)) {            
+        if (result.every(valid => valid)) { 
             try {
                 await axios.post('/v1/marketing/create-club-owner-registration', requestData);
                 modal.setModalData({
@@ -144,7 +163,7 @@ function SignUpOwner({gamePlatforms}: Props) {
         }
     }
 
-    useEffect(() => {
+    useEffect(function getModesOfPayment() {
         window.scrollTo({
             top: 0,
             left: 0,
@@ -157,6 +176,15 @@ function SignUpOwner({gamePlatforms}: Props) {
             setModesOfPayment(modes_of_payment);
         }
         initModesOfPayment();
+    }, [])
+
+    useEffect(function getClubOwnerServices() {
+        const initClubOwnerServices = async () => {
+            const result = await axios.get('/v1/marketing/get-club-owner-services');
+            const {club_owner_services} = result.data;
+            setClubOwnerServices(club_owner_services);
+        }
+        initClubOwnerServices();
     }, [])
 
     useEffect(() => {
@@ -278,7 +306,7 @@ function SignUpOwner({gamePlatforms}: Props) {
                     timeStamp={timeStamp}
                 />
 
-                <p className="text-align-left">Available Mode of Payment:</p>
+                <p className="heading--paragraph">Available Mode of Payment:</p>
                 <div className="modes--of--payment">
                     {
                         modesOfPayment.map((el, index) => (
@@ -335,6 +363,43 @@ function SignUpOwner({gamePlatforms}: Props) {
                             <input type="text" />
                     </div>
                     <div className="input--error">{selectedModesOfPayment.error}</div>
+                </div>
+
+                <p className="heading--paragraph">Services:</p>
+                <div className="club--owner--services">
+                    {
+                        clubOwnerServices.map((category, index) => 
+                            <div className="service--item" key={index}>
+                                <p className="service--category">{category.name}</p>
+                                <ul className="service--options">
+                                    {
+                                        category.services.map((service, serviceIndex) => 
+                                            <li key={serviceIndex}>
+                                                <CheckBox
+                                                    value={service.id.toString()}
+                                                    text={service.name}
+                                                    checkCallback={
+                                                        ({checked, value}) => {
+                                                            const selectedServices: Array<{id: string}> = [...selectedClubOwnerServices.value];
+                
+                                                            if (checked) {
+                                                                selectedServices.push({id: value});
+                                                            } else {
+                                                                const index = selectedServices.findIndex((el) => el.id === value);
+                                                                selectedServices.splice(index, 1);
+                                                            }
+                                                            setSelectedClubOwnerServices({...selectedClubOwnerServices, value: selectedServices, valid: selectedServices.length > 0});
+                                                        }
+                                                    }
+                                                />
+                                            </li>
+                                        )
+                                    }
+                                </ul>
+                            </div>
+                        )
+                    }
+                    <div className="input--error">{selectedClubOwnerServices.error}</div>
                 </div>
 
                 <p className="changes--notice">

@@ -67,9 +67,9 @@ function Main({validateToken}: Props) {
             secondaryText: (
                 <span className="secondary--text">
                     <span className="secondary--text__content">
-                        <p>Creation and monitoring of tables to ensure standard offered games are always ready.</p>
-                        <p>Creation of Tournaments and facilitation of deals.</p>
-                        <p>weekly cut-off execution</p>
+                        <p>Table Management.</p>
+                        <p>Tournament Execution.</p>
+                        <p>Cut-off Transition.</p>
                     </span>
                 </span>
             )
@@ -80,8 +80,9 @@ function Main({validateToken}: Props) {
             secondaryText: (
                 <span className="secondary--text">
                     <span className="secondary--text__content">
-                        <p>Loading of player deposit / Claim backs for withdrawals</p>
-                        <p>New member application / upgrade to agents and adding of downlines</p>
+                        <p>Counter Operation</p>
+                        <p>Member Management</p>
+                        <p>Agency Management</p>
                     </span>
                 </span>
             )
@@ -92,8 +93,9 @@ function Main({validateToken}: Props) {
             secondaryText: (
                 <span className="secondary--text">
                     <span className="secondary--text__content">
-                        <p>Weekly RB Computation</p>
-                        <p>General accounting services</p>
+                        <p>Commission List</p>
+                        <p>Data Studio</p>
+                        <p>General Accounting Services</p>
                     </span>
                 </span>
             )
@@ -104,7 +106,9 @@ function Main({validateToken}: Props) {
             secondaryText: (
                 <span className="secondary--text">
                     <span className="secondary--text__content">
-                        <p>Operating a 24/7 chat support (platform to be provided by client)</p>
+                        <p>24/7 chat support</p>
+                        <p>Event Planning</p>
+                        <p>Brand Consultancy</p>
                     </span>
                 </span>
             )
