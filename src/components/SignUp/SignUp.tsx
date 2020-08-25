@@ -29,7 +29,7 @@ function SignUp({location}: Props) {
 
     useEffect(() => {
         const initGamePlatforms = async () => {
-            const result = await axios.get('/v1/marketing/get-game-platforms');
+            const result = await axios.get('/v1/marketing/game-platforms');
             const {game_platforms} = result.data;
             setGamePlatforms(game_platforms);
         }

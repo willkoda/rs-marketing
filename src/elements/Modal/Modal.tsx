@@ -65,9 +65,7 @@ function Modal(props: Props) {
                     />
                 </div>
                 <div className="modal--content">
-                        {context.modalData ? context.modalData.content || 'Request Successful' : 'Request successful!'}
-                    <div className="">
-                    </div>
+                    {context.modalData ? context.modalData.content || 'Request Successful' : 'Request successful!'}
                 </div>
             </div>
         </div>

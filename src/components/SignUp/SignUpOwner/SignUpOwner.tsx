@@ -128,7 +128,7 @@ function SignUpOwner({gamePlatforms}: Props) {
     
         if (result.every(valid => valid)) { 
             try {
-                await axios.post('/v1/marketing/create-club-owner-registration', requestData);
+                await axios.post('/v1/marketing/club-owner-registration', requestData);
                 modal.setModalData({
                     header: 'Success.',
                     content: <div className="padding-top-bottom-20 padding-left-right-20" style={{height: "100%"}}>
@@ -171,7 +171,7 @@ function SignUpOwner({gamePlatforms}: Props) {
         })
 
         const initModesOfPayment = async () => {
-            const result = await axios.get('/v1/marketing/get-modes-of-payment');
+            const result = await axios.get('/v1/marketing/modes-of-payment');
             const {modes_of_payment} = result.data;
             setModesOfPayment(modes_of_payment);
         }
@@ -180,7 +180,7 @@ function SignUpOwner({gamePlatforms}: Props) {
 
     useEffect(function getClubOwnerServices() {
         const initClubOwnerServices = async () => {
-            const result = await axios.get('/v1/marketing/get-club-owner-services');
+            const result = await axios.get('/v1/marketing/club-owner-services');
             const {club_owner_services} = result.data;
             setClubOwnerServices(club_owner_services);
         }

@@ -103,7 +103,7 @@ function SignUpPlayer({gamePlatforms}: Props) {
 
         if (result.every(valid => valid)) {            
             try {
-                await axios.post('/v1/marketing/create-player-registration', requestData);
+                await axios.post('/v1/marketing/player-registration', requestData);
                 modal.setModalData({
                     header: 'Success.',
                     content: <div className="padding-top-bottom-20 padding-left-right-20" style={{height: "100%"}}>
@@ -156,7 +156,7 @@ function SignUpPlayer({gamePlatforms}: Props) {
         });
 
         const initModesOfPayment = async () => {
-            const result = await axios.get('/v1/marketing/get-stakes');
+            const result = await axios.get('/v1/marketing/stakes');
             const {stakes} = result.data;
             setStakeOptions(stakes);
         }
