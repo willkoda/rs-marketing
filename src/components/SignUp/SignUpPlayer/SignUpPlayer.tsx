@@ -1,15 +1,15 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
-import Input, {ResultInterface} from '../../../elements/Input/Input';
-import Select from '../../../elements/Select/Select';
-import Button from '../../../elements/Button/Button';
-import MobileNumberInput from '../../../elements/MobileNumberInput/MobileNumberInput';
-import CheckBox from '../../../elements/CheckBox/CheckBox';
-import axios from '../../../auxiliary/axios';
+import Input, {ResultInterface} from 'elements/Input/Input';
+import Select from 'elements/Select/Select';
+import Button from 'elements/Button/Button';
+import MobileNumberInput from 'elements/MobileNumberInput/MobileNumberInput';
+import CheckBox from 'elements/CheckBox/CheckBox';
+import axios from 'auxiliary/axios';
 import {MultipleChoices} from '../SignUp';
 
 import {useHistory} from 'react-router-dom';
 
-import {ModalContext} from '../../../providers/ModalProvider';
+import {ModalContext} from 'providers/ModalProvider';
 import {Option} from '../SignUp';
 
 interface Props {

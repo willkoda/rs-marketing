@@ -3,8 +3,8 @@ import './SignUp.scss';
 import SignUpOwner from './SignUpOwner/SignUpOwner';
 import SignUpPlayer from './SignUpPlayer/SignUpPlayer';
 
-import axios from '../../auxiliary/axios';
-import registrationImage from '../../assets/images/registration.jpg';
+import axios from 'auxiliary/axios';
+import registrationImage from 'assets/images/registration.jpg';
 
 interface Props {
     location: {

@@ -1,16 +1,16 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
-import Input, {ResultInterface} from '../../../elements/Input/Input';
-import Select from '../../../elements/Select/Select';
-import Button from '../../../elements/Button/Button';
-import MobileNumberInput from '../../../elements/MobileNumberInput/MobileNumberInput';
-import CheckBox from '../../../elements/CheckBox/CheckBox';
+import Input, {ResultInterface} from 'elements/Input/Input';
+import Select from 'elements/Select/Select';
+import Button from 'elements/Button/Button';
+import MobileNumberInput from 'elements/MobileNumberInput/MobileNumberInput';
+import CheckBox from 'elements/CheckBox/CheckBox';
 import {MultipleChoices} from '../SignUp';
 
 import {useHistory} from 'react-router-dom';
 import {Option} from '../SignUp';
 
-import {ModalContext} from '../../../providers/ModalProvider';
-import axios from '../../../auxiliary/axios';
+import {ModalContext} from 'providers/ModalProvider';
+import axios from 'auxiliary/axios';
 
 interface Props {
     gamePlatforms: Array<Option>
@@ -45,7 +45,10 @@ function SignUpOwner({gamePlatforms}: Props) {
     const [clubName, setClubName] = useState({...initialState});
     const [clubID, setClubID] = useState({...initialState});
     const [selectedModesOfPayment, setSelectedModesOfPayment] = useState<MultipleChoices>({value: [], valid: false, error:  ''});
-    const [selectedClubOwnerServices, setSelectedClubOwnerServices] = useState<ChosenClubOwnerServices>({value: [], valid: false, error: ''});
+    const [
+        selectedClubOwnerServices,
+        setSelectedClubOwnerServices
+    ] = useState<ChosenClubOwnerServices>({value: [], valid: false, error: ''});
 
     const [timeStamp, setTimeStamp] = useState(0);
 
@@ -197,7 +200,8 @@ function SignUpOwner({gamePlatforms}: Props) {
 
     return (
         <div className="constrained--container form--section--container">
-            <p>Are you the owner of a club? Interested in availing of our services? Please fill in the form below and we’ll get back to you!</p>
+            <p>Are you the owner of a club? Interested in availing of our services? 
+                Please fill in the form below and we’ll get back to you!</p>
             <form className="max-width-400 margin-left-right-auto margin-top-40" onSubmit={formSubmit}>
                 <Input 
                     id="firstName" 
@@ -317,7 +321,9 @@ function SignUpOwner({gamePlatforms}: Props) {
                                         ({checked, value}) => {
                                             const othersOption = el.text === 'Others';
                                             const input = othersInput.current.querySelector('input') as HTMLInputElement;
-                                            const selectedModes: Array<{id: string, other_data: string}> = [...selectedModesOfPayment.value];
+                                            const selectedModes: Array<{id: string, other_data: string}> = [
+                                                ...selectedModesOfPayment.value
+                                            ];
 
                                             if (othersOption) {
                                                 othersInput.current.style.height = checked ? '35px' : '0px';
@@ -330,7 +336,11 @@ function SignUpOwner({gamePlatforms}: Props) {
                                                 const index = selectedModes.findIndex((el) => el.id === value);
                                                 selectedModes.splice(index, 1);
                                             }
-                                            setSelectedModesOfPayment({...selectedModesOfPayment, value: selectedModes, valid: selectedModes.length > 0});
+                                            setSelectedModesOfPayment({
+                                                ...selectedModesOfPayment,
+                                                value: selectedModes,
+                                                valid: selectedModes.length > 0
+                                            });
                                         }
                                     }
                                 />
@@ -380,7 +390,9 @@ function SignUpOwner({gamePlatforms}: Props) {
                                                     text={service.name}
                                                     checkCallback={
                                                         ({checked, value}) => {
-                                                            const selectedServices: Array<{id: string}> = [...selectedClubOwnerServices.value];
+                                                            const selectedServices: Array<{id: string}> = [
+                                                                ...selectedClubOwnerServices.value
+                                                            ];
                 
                                                             if (checked) {
                                                                 selectedServices.push({id: value});
@@ -388,7 +400,11 @@ function SignUpOwner({gamePlatforms}: Props) {
                                                                 const index = selectedServices.findIndex((el) => el.id === value);
                                                                 selectedServices.splice(index, 1);
                                                             }
-                                                            setSelectedClubOwnerServices({...selectedClubOwnerServices, value: selectedServices, valid: selectedServices.length > 0});
+                                                            setSelectedClubOwnerServices({
+                                                                ...selectedClubOwnerServices,
+                                                                value: selectedServices,
+                                                                valid: selectedServices.length > 0
+                                                            });
                                                         }
                                                     }
                                                 />

@@ -3,15 +3,15 @@ import './App.scss';
 
 import {Switch, Route} from 'react-router-dom';
 
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import Main from './components/Main/Main';
-import SignUp from './components/SignUp/SignUp';
-import LogIn from './components/LogIn/LogIn';
-import Modal from './elements/Modal/Modal';
+import Header from 'components/Header/Header';
+import Footer from 'components/Footer/Footer';
+import Main from 'components/Main/Main';
+import SignUp from 'components/SignUp/SignUp';
+import LogIn from 'components/LogIn/LogIn';
+import Modal from 'elements/Modal/Modal';
 
-import HeaderProvider from './providers/HeaderProvider';
-import ModalProvider, {ModalContext} from './providers/ModalProvider';
+import HeaderProvider from 'providers/HeaderProvider';
+import ModalProvider, {ModalContext} from 'providers/ModalProvider';
 
 declare global {
     interface Window { 

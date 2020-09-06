@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
-import axios from '../../auxiliary/axios';
-import {ModalContext} from '../../providers/ModalProvider';
+import axios from 'auxiliary/axios';
+import {ModalContext} from 'providers/ModalProvider';
 
 function AdminMarketingExport() {
     const modal = useContext(ModalContext);

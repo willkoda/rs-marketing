@@ -3,10 +3,10 @@ import {connect} from 'react-redux';
 import {
     storeSetToken,
     storeRemoveToken
-} from '../auxiliary/dispatch';
-import {token} from '../auxiliary/state';
+} from 'auxiliary/dispatch';
+import {token} from 'auxiliary/state';
 
-import {TokenState} from '../redux/reducers/token-reducer';
+import {TokenState} from 'redux/reducers/token-reducer';
 
 type indexSignature = {
     [key: string]: any

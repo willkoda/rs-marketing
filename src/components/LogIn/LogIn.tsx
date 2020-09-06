@@ -1,17 +1,17 @@
 import React, {useState} from 'react';
 import './LogIn.scss';
-import Input, {ResultInterface} from '../../elements/Input/Input';
-import Button from '../../elements/Button/Button';
-import Notice from '../../elements/Notice/Notice';
+import Input, {ResultInterface} from 'elements/Input/Input';
+import Button from 'elements/Button/Button';
+import Notice from 'elements/Notice/Notice';
 
-import {storeSetToken} from '../../auxiliary/dispatch';
-import withStoreConnection from '../../hoc/withStoreConnection';
+import {storeSetToken} from 'auxiliary/dispatch';
+import withStoreConnection from 'hoc/withStoreConnection';
 import {compose} from 'redux';
 
-import {TokenState} from '../../redux/reducers/token-reducer';
+import {TokenState} from 'redux/reducers/token-reducer';
 
 import {useHistory} from 'react-router-dom';
-import axios from '../../auxiliary/axios';
+import axios from 'auxiliary/axios';
 
 interface Props {
     storeSetToken(params: TokenState): void;

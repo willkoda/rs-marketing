@@ -28,8 +28,14 @@ function Select(props: Props) {
         }
     });
     const [optionSelected, setOptionSelected] = useState<string>(null!);
-    const [selectOptions, setSelectOptions] = useState<Array<SelectOptionsInterface>>(props.selectContent === 'countries' ? mappedCountries : []);
-    const [filteredSelectOptions, setFilteredSelectOptions] = useState<Array<SelectOptionsInterface>>(props.selectContent === 'countries' ? mappedCountries : []);
+    const [
+        selectOptions,
+        setSelectOptions
+    ] = useState<Array<SelectOptionsInterface>>(props.selectContent === 'countries' ? mappedCountries : []);
+    const [
+        filteredSelectOptions,
+        setFilteredSelectOptions
+    ] = useState<Array<SelectOptionsInterface>>(props.selectContent === 'countries' ? mappedCountries : []);
     const [expanded, setExpanded] = useState(true);
     const [pristine, setPristine] = useState(true);
     const list = useRef<HTMLUListElement>(null!);
@@ -138,13 +144,6 @@ function Select(props: Props) {
     }, [props.options]);
 
     useEffect(() => {
-        // if (props.selectContent === 'countries' && props.initialValue) {
-        //     const country = selectOptions.find(element => element.value === props.initialValue);            
-        //     setOptionSelected(country!.value);
-        //     input.current.value = country!.text;
-        //     setPristine(false);
-        // }
-
         if (props.initialValue) {
             setOptionSelected(props.initialValue);
             input.current.value = props.initialValue;
@@ -182,7 +181,13 @@ function Select(props: Props) {
 
             <ul className="select--list" role="listbox" id={`owned-${props.id}`} ref={list} onClick={click} >
                 {filteredSelectOptions.map((element, index) => {
-                    return <li role="option" aria-selected={element.value === optionSelected ? 'true' : 'false'} key={index} value={element.value}>{element.text}</li>
+                    return (
+                        <li 
+                            role="option"
+                            aria-selected={element.value === optionSelected ? 'true' : 'false'}
+                            key={index} value={element.value}>{element.text}
+                        </li>
+                    );
                 })}
             </ul>
             <div className="select--error">{props.error}</div>

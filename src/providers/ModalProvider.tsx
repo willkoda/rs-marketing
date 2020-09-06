@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ModalContextInterface, ModalDataInterface} from '../elements/Modal/Modal';
+import {ModalContextInterface, ModalDataInterface} from 'elements/Modal/Modal';
 
 interface Props {
     children: JSX.Element | Array<JSX.Element>

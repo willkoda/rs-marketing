@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import './Button.scss';
-import {waveAnimation} from '../../auxiliary/animation/wave-animation';
+import {waveAnimation} from 'auxiliary/animation/wave-animation';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface Props {

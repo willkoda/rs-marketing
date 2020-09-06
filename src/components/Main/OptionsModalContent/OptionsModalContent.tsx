@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
 import './OptionsModalContent.scss';
-import smartPhone from '../../../assets/images/smartphone.svg';
-import clubOwner from '../../../assets/images/club-owner.svg';
+import smartPhone from 'assets/images/smartphone.svg';
+import clubOwner from 'assets/images/club-owner.svg';
 import {useHistory} from 'react-router-dom';
-import {ModalContext} from '../../../providers/ModalProvider';
+import {ModalContext} from 'providers/ModalProvider';
 
 function OptionsModalContent() {
     const history = useHistory();

@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import './IconButton.scss';
-import {waveAnimation} from '../../auxiliary/animation/wave-animation';
+import {waveAnimation} from 'auxiliary/animation/wave-animation';
 
 interface Props {
     className?: string;

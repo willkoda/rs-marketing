@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import axios from '../auxiliary/axios';
+import axios from 'auxiliary/axios';
 
 interface Props {
     accessToken: string | null;

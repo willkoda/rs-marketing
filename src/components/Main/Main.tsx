@@ -4,14 +4,14 @@ import './Services.scss';
 import {Link} from 'react-router-dom';
 import AdminMarketingExport from './AdminMarketingExport';
 
-import mainImage from '../../assets/images/main.jpg';
+import mainImage from 'assets/images/main.jpg';
 
-import {HeaderContext} from '../../providers/HeaderProvider';
-import {ModalContext} from '../../providers/ModalProvider';
+import {HeaderContext} from 'providers/HeaderProvider';
+import {ModalContext} from 'providers/ModalProvider';
 
 import OptionsModalContent from './OptionsModalContent/OptionsModalContent';
 
-import withTokenValidation from '../../hoc/withTokenValidation';
+import withTokenValidation from 'hoc/withTokenValidation';
 import {compose} from 'redux';
 
 import {
@@ -189,10 +189,10 @@ function Main({validateToken}: Props) {
                         <p className="heading"
                             ref={headerContext.activeMainPageSection === 'services' ? activeSectionRef : null}>What we offer</p>
                         <div className="sub--heading">Our Services</div>
-                        <ul className="services--list margin-top-50">
+                        <ul className="services--list margin-top-20">
                             {
                                 serviceItems.map((el, index) => 
-                                    <li key={index} className="margin-top-20">
+                                    <li key={index} className="margin-top-60">
                                         <button className="icon--and--primary--text" onClick={(e) => clickHandler(e)}>
                                             <span className="icon">{el.icon}</span>
                                             <span className="primary--text margin-top-bottom-10">{el.primaryText}</span>

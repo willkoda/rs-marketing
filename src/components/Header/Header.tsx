@@ -1,10 +1,10 @@
 import React, {useContext} from 'react';
 import './Header.scss';
-import Menu from '../../elements/Menu/Menu';
-import {HeaderContext, ActiveLink} from '../../providers/HeaderProvider';
+import Menu from 'elements/Menu/Menu';
+import {HeaderContext, ActiveLink} from 'providers/HeaderProvider';
 import {useLocation, useHistory} from 'react-router-dom';
 
-import headset from '../../assets/images/headset.svg';
+import headset from 'assets/images/headset.svg';
 
 function Header() {
     const location = useLocation();

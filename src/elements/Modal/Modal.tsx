@@ -1,7 +1,7 @@
 import React, {useEffect, useContext, useRef, useCallback} from 'react';
 import './Modal.scss';
 import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '../../elements/IconButton/IconButton';
+import IconButton from 'elements/IconButton/IconButton';
 
 interface Props {
     context: React.Context<ModalContextInterface>;
